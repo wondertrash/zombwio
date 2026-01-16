@@ -7,6 +7,8 @@ var cardinal_direction: Vector2 = Vector2.DOWN
 var speed_multiplier: float = 1.0
 var default_speed: float = 88.0
 var is_dead := false
+func _ready():
+	add_to_group("player")
 func _process(delta):
 	look_at(get_global_mouse_position())
 	direction = Vector2(
