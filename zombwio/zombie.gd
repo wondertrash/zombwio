@@ -2,10 +2,12 @@ extends CharacterBody2D
 @export var move_speed: float = 35.0
 @export var aggro_radius: float = 80.0
 @export var chase_radius: float = 160.0
+@export var health: int = 3
 var direction: Vector2 = Vector2.ZERO
 var player: Node2D = null
 var is_chasing: bool = false
 func _ready():
+	add_to_group("zombie")
 	player = get_tree().get_first_node_in_group("player")
 func _physics_process(delta):
 	if player == null:
@@ -23,3 +25,7 @@ func _physics_process(delta):
 		direction = Vector2.ZERO
 	velocity = direction * move_speed
 	move_and_slide()
+func take_damage(amount: int):
+	health -= amount
+	if health <= 0:
+		queue_free()
