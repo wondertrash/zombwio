@@ -12,6 +12,10 @@ var cardinal_direction: Vector2 = Vector2.DOWN
 var speed_multiplier: float = 1.0
 var default_speed: float = 100.0
 var is_dead := false
+var inventory: Dictionary = {
+	"wood": 0,
+	"stone": 0
+}
 func _ready():
 	add_to_group("player")
 	current_health = max_health
@@ -77,3 +81,5 @@ func take_damage(amount: int):
 		die()
 func die():
 	pass
+func collect_resource(type: String, amount: int):
+	inventory[type] += amount

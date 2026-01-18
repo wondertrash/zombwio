@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var chase_radius: float = 160.0
 @export var health: int = 3
 @export var attack_damage: int = 10
-@export var attack_range: int = 20
+@export var attack_range: int = 25
 @export var attack_cooldown: float = 1.0
 var can_attack_player: bool = true
 var direction: Vector2 = Vector2.ZERO
