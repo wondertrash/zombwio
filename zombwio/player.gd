@@ -8,7 +8,8 @@ var invincibility_time: float = 0.8
 var current_health: float = max_health
 var max_hunger: float = 255.0
 var hunger_drain_rate: float = 1.0
-#var hunger_damage_rate: float = 3.0, finish hunger, add constant number of resources on map at any time
+var hunger_damage_rate: float = 3.0
+var current_hunger: float = max_hunger
 var can_attack: bool = true
 var is_invincible: bool = false
 var cardinal_direction: Vector2 = Vector2.DOWN
@@ -17,7 +18,8 @@ var default_speed: float = 100.0
 var is_dead := false
 var inventory: Dictionary = {
 	"wood": 0,
-	"stone": 0
+	"stone": 0,
+	"berries": 0
 }
 func _ready():
 	add_to_group("player")
@@ -32,7 +34,7 @@ func _ready():
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 8.0
 	add_child(camera)
-func _process(_delta):
+func _process(delta):
 	look_at(get_global_mouse_position())
 	direction = Vector2(
 		Input.get_action_strength("right") - Input.get_action_strength("left"),
@@ -45,7 +47,6 @@ func _process(_delta):
 			cardinal_direction = Vector2.RIGHT if direction.x > 0 else Vector2.LEFT
 		else:
 			cardinal_direction = Vector2.DOWN if direction.y > 0 else Vector2.UP
-	
 	var dir = Vector2.ZERO
 	if Input.is_action_pressed("ui_up"):
 		dir.y -= 1
@@ -55,6 +56,10 @@ func _process(_delta):
 		dir.y += 1
 	if Input.is_action_pressed("ui_left"):
 		dir.x -= 1
+	current_hunger -= hunger_drain_rate * delta
+	current_hunger = clamp(current_hunger, 0, max_hunger)
+	if current_hunger <= 0:
+		take_damage(int(hunger_damage_rate * delta))
 func _physics_process(_delta):
 	velocity = direction * default_speed * speed_multiplier
 	move_and_slide()
@@ -98,4 +103,10 @@ func take_damage(amount: int):
 func die():
 	pass
 func collect_resource(type: String, amount: int):
-	inventory[type] += amount
+	if type == "berries":
+		eat_food(40)
+	else:
+		inventory[type] += amount
+func eat_food(amount: float):
+	current_hunger += amount
+	current_hunger = clamp(current_hunger, 0, max_hunger)

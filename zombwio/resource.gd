@@ -9,6 +9,8 @@ func _ready() -> void:
 		sprite.texture = load("res://images/stick.png")
 	elif resource_type == "stone":
 		sprite.texture = load("res://images/stone.png")
+	elif resource_type == "berries":
+		sprite.texture = load("res://images/salmonberry.png")
 	add_child(sprite)
 func _physics_process(_delta):
 	var player = get_tree().get_first_node_in_group("player")
