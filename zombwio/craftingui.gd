@@ -4,9 +4,9 @@ var panel: Panel
 var is_open: bool = false
 var recipes = {
 	"Fist": [0, 0, 0, 0],
-	"Spear": [23, 9, 20, 10],
-	"Bow": [20, 8, 10, 30],
-	"Gun": [48, 72, 7, 50]
+	"Spear": [70, 0, 80, 10],
+	"Bow": [60, 20, 40, 30],
+	"Gun": [48, 72, 28, 50]
 }
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS

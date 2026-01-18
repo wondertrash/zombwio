@@ -1,11 +1,11 @@
 extends CharacterBody2D
 @export var move_speed: float = 35.0
-@export var aggro_radius: float = 80.0
-@export var chase_radius: float = 160.0
-@export var health: int = 3
-@export var attack_damage: int = 10
-@export var attack_range: int = 25
-@export var attack_cooldown: float = 1.0
+@export var aggro_radius: float = 240.0
+@export var chase_radius: float = 320.0
+@export var health: float = 255.0
+@export var attack_damage: float = 14
+@export var attack_range: int = 35
+@export var attack_cooldown: float = 0.8
 var can_attack_player: bool = true
 var direction: Vector2 = Vector2.ZERO
 var player: Node2D = null

@@ -1,11 +1,14 @@
 class_name Player extends CharacterBody2D
 var move_speed: float = 100.0
 var direction: Vector2 = Vector2.ZERO
-var attack_range: float = 20.0
-var attack_damage: int = 1
-var max_health: int = 100
-var invincibility_time: float = 1.0
-var current_health: int = max_health
+var attack_range: float = 30.0
+var attack_damage: float = 10.0
+var max_health: float = 255.0
+var invincibility_time: float = 0.8
+var current_health: float = max_health
+var max_hunger: float = 255.0
+var hunger_drain_rate: float = 1.0
+#var hunger_damage_rate: float = 3.0, finish hunger, add constant number of resources on map at any time
 var can_attack: bool = true
 var is_invincible: bool = false
 var cardinal_direction: Vector2 = Vector2.DOWN
@@ -29,7 +32,7 @@ func _ready():
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 8.0
 	add_child(camera)
-func _process(delta):
+func _process(_delta):
 	look_at(get_global_mouse_position())
 	direction = Vector2(
 		Input.get_action_strength("right") - Input.get_action_strength("left"),
