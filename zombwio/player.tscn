@@ -8,6 +8,7 @@
 radius = 11.0
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 3
 script = ExtResource("1_onrkg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

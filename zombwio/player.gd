@@ -19,6 +19,11 @@ var inventory: Dictionary = {
 func _ready():
 	add_to_group("player")
 	current_health = max_health
+	var map_size = Vector2(5120, 3840)
+	global_position = Vector2(
+		randf_range(16, map_size.x - 16),
+		randf_range(16, map_size.y - 16)
+	)
 	var camera = Camera2D.new()
 	camera.enabled = true
 	camera.position_smoothing_enabled = true

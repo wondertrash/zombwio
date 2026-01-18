@@ -5,13 +5,13 @@ var stone_label: Label
 func _ready() -> void:
 	wood_label = Label.new()
 	wood_label.position = Vector2(10, 50)
-	wood_label.add_theme_font_size_override("font_size", 20)
+	wood_label.add_theme_font_size_override("font_size", 16)
 	add_child(wood_label)
 	stone_label = Label.new()
 	stone_label.position = Vector2(10,75)
-	stone_label.add_theme_font_size_override("font_size", 20)
+	stone_label.add_theme_font_size_override("font_size", 16)
 	add_child(stone_label)
-func _process(_delta):
+func _process(delta):
 	if player:
 		wood_label.text = "Wood: %d" % player.inventory["wood"]
 		stone_label.text = "Stone: %d" % player.inventory["stone"]
