@@ -3,13 +3,18 @@ var move_speed: float = 100.0
 var direction: Vector2 = Vector2.ZERO
 var attack_range: float = 20.0
 var attack_damage: int = 1
+var max_health: int = 100
+var invincibility_time: float = 1.0
+var current_health: int = max_health
 var can_attack: bool = true
+var is_invincible: bool = false
 var cardinal_direction: Vector2 = Vector2.DOWN
 var speed_multiplier: float = 1.0
 var default_speed: float = 100.0
 var is_dead := false
 func _ready():
 	add_to_group("player")
+	current_health = max_health
 func _process(delta):
 	look_at(get_global_mouse_position())
 	direction = Vector2(
@@ -58,3 +63,17 @@ func _perform_attack():
 	hitbox.queue_free()
 	await get_tree().create_timer(0.4).timeout
 	can_attack = true
+func take_damage(amount: int):
+	if is_invincible:
+		return
+	current_health -= amount
+	modulate = Color(1, 0.3, 0.3)
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color(1, 1, 1)
+	is_invincible = true
+	await get_tree().create_timer(invincibility_time).timeout
+	is_invincible = false
+	if current_health <= 0:
+		die()
+func die():
+	print("Player died!")

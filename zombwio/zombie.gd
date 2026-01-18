@@ -3,6 +3,9 @@ extends CharacterBody2D
 @export var aggro_radius: float = 80.0
 @export var chase_radius: float = 160.0
 @export var health: int = 3
+@export var attack_damage: int = 10
+@export var attack_cooldown: float = 1.0
+var can_attack_player: bool = true
 var direction: Vector2 = Vector2.ZERO
 var player: Node2D = null
 var is_chasing: bool = false
@@ -21,6 +24,12 @@ func _physics_process(delta):
 		direction = (player.global_position - global_position).normalized()
 		var angle = global_position.direction_to(player.global_position).angle()
 		rotation = angle
+		if distance_to_player < 15 and can_attack_player:
+			if player.has_method("take_damage"):
+				player.take_damage(attack_damage)
+				can_attack_player = false
+				await get_tree().create_timer(attack_cooldown).timeout
+				can_attack_player = true
 	else:
 		direction = Vector2.ZERO
 	velocity = direction * move_speed
