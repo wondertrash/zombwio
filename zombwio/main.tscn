@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://coju2hp6gsoeu"]
+[gd_scene load_steps=9 format=3 uid="uid://coju2hp6gsoeu"]
 
 [ext_resource type="PackedScene" uid="uid://deufn2gdbfua0" path="res://player.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://dbbr714tg6ghr" path="res://zombie.tscn" id="2_0xm2m"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://8e1odnim7q4r" path="res://resourcespawner.tscn" id="4_7mycd"]
 [ext_resource type="PackedScene" uid="uid://bar8k7n2xq0yo" path="res://resource.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://dmsjjuy628sjf" path="res://inventory.tscn" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://c8mnghp2eidw0" path="res://craftingui.tscn" id="7_5vw27"]
 
 [node name="Game" type="Node2D"]
 
@@ -21,6 +22,8 @@ script = ExtResource("3_h2yge")
 resource_scene = ExtResource("5_lquwl")
 
 [node name="Healthui" parent="." instance=ExtResource("4_1bvp3")]
+
+[node name="Craftingui" parent="." instance=ExtResource("7_5vw27")]
 
 [node name="Inventory" parent="." instance=ExtResource("6_7mycd")]
 

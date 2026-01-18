@@ -3,8 +3,8 @@ extends Node2D
 @export var spawn_area_size: Vector2 = Vector2(640, 480)
 @export var spawn_map_buffer: float = 35.0
 @export var spawn_player_buffer: float = 35.0
-@export var wood_count: int = 8
-@export var stone_count: int = 7
+@export var wood_count: int = 80
+@export var stone_count: int = 80
 func _ready() -> void:
 	call_deferred("spawn_resources")
 func _process(delta: float) -> void:

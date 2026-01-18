@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8mnghp2eidw0"]
+
+[ext_resource type="Script" uid="uid://b21aafe462kva" path="res://craftingui.gd" id="1_ymssn"]
+
+[node name="Craftingui" type="CanvasLayer"]
+script = ExtResource("1_ymssn")
