@@ -10,6 +10,10 @@ var max_hunger: float = 255.0
 var hunger_drain_rate: float = 1.0
 var hunger_damage_rate: float = 3.0
 var current_hunger: float = max_hunger
+var berry_health: float = 10.0
+var regen_delay: float = 8.0
+var regen_rate: float = 16.0
+var time_since_last_damage: float = 0.0
 var can_attack: bool = true
 var is_invincible: bool = false
 var cardinal_direction: Vector2 = Vector2.DOWN
@@ -60,6 +64,10 @@ func _process(delta):
 	current_hunger = clamp(current_hunger, 0, max_hunger)
 	if current_hunger <= 0:
 		take_damage(int(hunger_damage_rate * delta))
+	time_since_last_damage += delta
+	if time_since_last_damage >= regen_delay and current_health < max_health:
+		current_health += regen_rate * delta
+		current_health = clamp(current_health, 0, max_health)
 func _physics_process(_delta):
 	velocity = direction * default_speed * speed_multiplier
 	move_and_slide()
@@ -92,6 +100,7 @@ func take_damage(amount: int):
 	if is_invincible:
 		return
 	current_health -= amount
+	time_since_last_damage = 0.0
 	modulate = Color(1, 0.3, 0.3)
 	await get_tree().create_timer(0.1).timeout
 	modulate = Color(1, 1, 1)
@@ -110,3 +119,5 @@ func collect_resource(type: String, amount: int):
 func eat_food(amount: float):
 	current_hunger += amount
 	current_hunger = clamp(current_hunger, 0, max_hunger)
+	current_health += berry_health
+	current_health = clamp(current_health, 0, max_health)
