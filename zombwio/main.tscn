@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://deufn2gdbfua0" path="res://player.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://dbbr714tg6ghr" path="res://zombie.tscn" id="2_0xm2m"]
-[ext_resource type="Script" uid="uid://dpu0fxg5wdikm" path="res://zombie.gd" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://dnorke7acoblq" path="res://zombiemanager.tscn" id="2_5vw27"]
 [ext_resource type="PackedScene" uid="uid://c7skidgv0to3" path="res://healthui.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://8e1odnim7q4r" path="res://resourcespawner.tscn" id="4_7mycd"]
 [ext_resource type="PackedScene" uid="uid://bar8k7n2xq0yo" path="res://resource.tscn" id="5_lquwl"]
@@ -14,8 +14,8 @@
 
 [node name="Player" parent="." instance=ExtResource("1_ig7tw")]
 
-[node name="Zombie" parent="." instance=ExtResource("2_0xm2m")]
-script = ExtResource("3_h2yge")
+[node name="Zombiemanager" parent="." instance=ExtResource("2_5vw27")]
+zombie_scene = ExtResource("2_0xm2m")
 
 [node name="Resourcespawner" parent="." instance=ExtResource("4_7mycd")]
 resource_scene = ExtResource("5_lquwl")

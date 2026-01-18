@@ -1,8 +1,8 @@
 extends Node2D
 @export var resource_scene: PackedScene
 @export var spawn_area_size: Vector2 = Vector2(5120, 3840)
-@export var spawn_map_buffer: float = 35.0
-@export var spawn_player_buffer: float = 35.0
+@export var spawn_map_buffer: float = 16.0
+@export var spawn_player_buffer: float = 16.0
 @export var wood_count: int = 80
 @export var stone_count: int = 80
 func _ready() -> void:
