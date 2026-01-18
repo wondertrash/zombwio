@@ -76,4 +76,4 @@ func take_damage(amount: int):
 	if current_health <= 0:
 		die()
 func die():
-	print("Player died!")
+	pass
