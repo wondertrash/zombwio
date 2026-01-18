@@ -48,4 +48,4 @@ func _craft_item(item_name: String):
 		player.attack_range = 20 + range_bonus
 		print("Crafted ", item_name, "! Damage: ", player.attack_damage, " Range: ", player.attack_range)
 	else:
-		print("Not enough resources!")
+		print("Not enough resources")

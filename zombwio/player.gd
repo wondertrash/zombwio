@@ -19,6 +19,11 @@ var inventory: Dictionary = {
 func _ready():
 	add_to_group("player")
 	current_health = max_health
+	var camera = Camera2D.new()
+	camera.enabled = true
+	camera.position_smoothing_enabled = true
+	camera.position_smoothing_speed = 8.0
+	add_child(camera)
 func _process(delta):
 	look_at(get_global_mouse_position())
 	direction = Vector2(
@@ -45,6 +50,9 @@ func _process(delta):
 func _physics_process(_delta):
 	velocity = direction * default_speed * speed_multiplier
 	move_and_slide()
+	var map_size = Vector2(5120, 3840)
+	global_position.x = clamp(global_position.x, 0, map_size.x)
+	global_position.y = clamp(global_position.y, 0, map_size.y)
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and can_attack:
 		_perform_attack()
 func _perform_attack():
