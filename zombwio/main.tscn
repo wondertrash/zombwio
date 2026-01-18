@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://coju2hp6gsoeu"]
+[gd_scene load_steps=7 format=3 uid="uid://coju2hp6gsoeu"]
 
 [ext_resource type="PackedScene" uid="uid://deufn2gdbfua0" path="res://player.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://dbbr714tg6ghr" path="res://zombie.tscn" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://dpu0fxg5wdikm" path="res://zombie.gd" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c7skidgv0to3" path="res://healthui.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bar8k7n2xq0yo" path="res://resource.tscn" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://dmsjjuy628sjf" path="res://inventory.tscn" id="6_7mycd"]
 
 [node name="Game" type="Node2D"]
 
@@ -18,7 +19,9 @@ format = 2
 position = Vector2(320, 120)
 script = ExtResource("3_h2yge")
 
-[node name="Healthui" parent="." instance=ExtResource("4_1bvp3")]
-
 [node name="Resource" parent="." instance=ExtResource("5_lquwl")]
 position = Vector2(160, 240)
+
+[node name="Healthui" parent="." instance=ExtResource("4_1bvp3")]
+
+[node name="Inventory" parent="." instance=ExtResource("6_7mycd")]

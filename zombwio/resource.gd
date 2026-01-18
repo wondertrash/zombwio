@@ -1,5 +1,5 @@
 extends Area2D
-@export var resource_type: String = "wood"
+@export var resource_type: String = "stone"
 @export var amount: int = 1
 @export var pickup_radius: float = 30.0
 var sprite: Sprite2D
