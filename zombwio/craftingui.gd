@@ -44,8 +44,13 @@ func _craft_item(item_name: String):
 	if player.inventory["wood"] >= wood_cost and player.inventory["stone"] >= stone_cost:
 		player.inventory["wood"] -= wood_cost
 		player.inventory["stone"] -= stone_cost
-		player.attack_damage = 1 + damage_bonus
-		player.attack_range = 20 + range_bonus
-		print("Crafted ", item_name, "! Damage: ", player.attack_damage, " Range: ", player.attack_range)
+		player.current_weapon = item_name.to_lower()
+		player.attack_damage = 10 + damage_bonus
+		player.attack_range = 35 + range_bonus
+		panel.modulate = Color(0.5, 1, 0.5)
+		await get_tree().create_timer(0.2).timeout
+		panel.modulate = Color(1, 1, 1)
 	else:
-		print("Not enough resources")
+		panel.modulate = Color(1, 0.5, 0.5)
+		await get_tree().create_timer(0.2).timeout
+		panel.modulate = Color(1, 1, 1)

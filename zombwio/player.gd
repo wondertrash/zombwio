@@ -1,7 +1,7 @@
 class_name Player extends CharacterBody2D
 var move_speed: float = 100.0
 var direction: Vector2 = Vector2.ZERO
-var attack_range: float = 30.0
+var attack_range: float = 25.0
 var attack_damage: float = 10.0
 var max_health: float = 255.0
 var invincibility_time: float = 0.8
@@ -15,6 +15,8 @@ var regen_delay: float = 8.0
 var regen_rate: float = 16.0
 var time_since_last_damage: float = 0.0
 var can_attack: bool = true
+var current_weapon: String = "fist"
+var projectile_scene = preload("res://projectile.tscn")
 var is_invincible: bool = false
 var cardinal_direction: Vector2 = Vector2.DOWN
 var speed_multiplier: float = 1.0
@@ -78,23 +80,11 @@ func _physics_process(_delta):
 		_perform_attack()
 func _perform_attack():
 	can_attack = false
-	var hitbox = Area2D.new()
-	var collision = CollisionShape2D.new()
-	var shape = CircleShape2D.new()
-	shape.radius = attack_range
-	collision.shape = shape
-	hitbox.add_child(collision)
-	var mouse_dir = global_position.direction_to(get_global_mouse_position())
-	hitbox.global_position = global_position + mouse_dir * attack_range
-	get_parent().add_child(hitbox)
-	await get_tree().process_frame
-	hitbox.body_entered.connect(func(body):
-		if body.is_in_group("zombie"):
-			body.take_damage(attack_damage)
-	)
-	await get_tree().create_timer(0.2).timeout
-	hitbox.queue_free()
-	await get_tree().create_timer(0.4).timeout
+	if current_weapon == "bow" or current_weapon == "gun":
+		shoot_projectile()
+	else:
+		melee_attack()
+	await get_tree().create_timer(0.3).timeout
 	can_attack = true
 func take_damage(amount: int):
 	if is_invincible:
@@ -121,3 +111,30 @@ func eat_food(amount: float):
 	current_hunger = clamp(current_hunger, 0, max_hunger)
 	current_health += berry_health
 	current_health = clamp(current_health, 0, max_health)
+func melee_attack():
+	var hitbox = Area2D.new()
+	var collision = CollisionShape2D.new()
+	var shape = CircleShape2D.new()
+	shape.radius = attack_range
+	collision.shape = shape
+	hitbox.add_child(collision)
+	var mouse_dir = global_position.direction_to(get_global_mouse_position())
+	hitbox.global_position = global_position + mouse_dir * attack_range
+	get_parent().add_child(hitbox)
+	hitbox.body_entered.connect(func(body):
+		if body.is_in_group("zombie"):
+			body.take_damage(attack_damage)
+	)
+	await get_tree().process_frame
+	await get_tree().create_timer(0.1).timeout
+	hitbox.queue_free()
+func shoot_projectile():
+	var projectile = projectile_scene.instantiate()
+	projectile.global_position = global_position
+	projectile.direction = global_position.direction_to(get_global_mouse_position())
+	projectile.rotation = projectile.direction.angle()
+	if current_weapon == "gun":
+		projectile.damage = 80
+	else:
+		projectile.damage = 40
+	get_parent().add_child(projectile)
