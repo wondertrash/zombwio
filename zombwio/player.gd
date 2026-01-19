@@ -4,7 +4,7 @@ var direction: Vector2 = Vector2.ZERO
 var attack_range: float = 25.0
 var attack_damage: float = 10.0
 var max_health: float = 255.0
-var invincibility_time: float = 0.8
+var invincibility_time: float = 0.1
 var current_health: float = max_health
 var max_hunger: float = 255.0
 var hunger_drain_rate: float = 1.0
@@ -17,6 +17,7 @@ var time_since_last_damage: float = 0.0
 var can_attack: bool = true
 var current_weapon: String = "fist"
 var projectile_scene = preload("res://projectile.tscn")
+var survival_time: float = 0.0
 var is_invincible: bool = false
 var cardinal_direction: Vector2 = Vector2.DOWN
 var speed_multiplier: float = 1.0
@@ -70,6 +71,7 @@ func _process(delta):
 	if time_since_last_damage >= regen_delay and current_health < max_health:
 		current_health += regen_rate * delta
 		current_health = clamp(current_health, 0, max_health)
+	survival_time += delta
 func _physics_process(_delta):
 	velocity = direction * default_speed * speed_multiplier
 	move_and_slide()
@@ -100,7 +102,9 @@ func take_damage(amount: int):
 	if current_health <= 0:
 		die()
 func die():
-	pass
+	var death_screen = get_tree().current_scene.get_node("Death")
+	if death_screen:
+		death_screen.show_death_screen(survival_time)
 func collect_resource(type: String, amount: int):
 	if type == "berries":
 		eat_food(40)

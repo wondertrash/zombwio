@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://byc8rnaje70ob"]
+
+[ext_resource type="Script" uid="uid://4b5v2b1ybaio" path="res://death.gd" id="1_qemge"]
+
+[node name="Death" type="CanvasLayer"]
+script = ExtResource("1_qemge")

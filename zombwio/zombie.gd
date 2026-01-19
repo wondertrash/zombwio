@@ -5,7 +5,7 @@ extends CharacterBody2D
 @export var health: float = 255.0
 @export var attack_damage: float = 14
 @export var attack_range: int = 35
-@export var attack_cooldown: float = 0.8
+@export var attack_cooldown: float = 0.4
 var can_attack_player: bool = true
 var direction: Vector2 = Vector2.ZERO
 var player: Node2D = null

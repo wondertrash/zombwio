@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbtn0aeyqe34c"]
+
+[ext_resource type="Script" uid="uid://cfgb7b75o6qjr" path="res://startmenu.gd" id="1_ynf42"]
+[ext_resource type="PackedScene" uid="uid://coju2hp6gsoeu" path="res://main.tscn" id="2_kj28g"]
+
+[node name="Startmenu" type="CanvasLayer"]
+script = ExtResource("1_ynf42")
+game_scene = ExtResource("2_kj28g")

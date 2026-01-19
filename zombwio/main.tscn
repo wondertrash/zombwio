@@ -1,13 +1,13 @@
 [gd_scene load_steps=10 format=3 uid="uid://coju2hp6gsoeu"]
 
 [ext_resource type="PackedScene" uid="uid://deufn2gdbfua0" path="res://player.tscn" id="1_ig7tw"]
-[ext_resource type="PackedScene" uid="uid://dbbr714tg6ghr" path="res://zombie.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://dnorke7acoblq" path="res://zombiemanager.tscn" id="2_5vw27"]
 [ext_resource type="PackedScene" uid="uid://c7skidgv0to3" path="res://healthui.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://8e1odnim7q4r" path="res://resourcespawner.tscn" id="4_7mycd"]
 [ext_resource type="PackedScene" uid="uid://bar8k7n2xq0yo" path="res://resource.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://dmsjjuy628sjf" path="res://inventory.tscn" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://c8mnghp2eidw0" path="res://craftingui.tscn" id="7_5vw27"]
+[ext_resource type="PackedScene" uid="uid://byc8rnaje70ob" path="res://death.tscn" id="8_kek77"]
 [ext_resource type="PackedScene" uid="uid://dcm7x7iexitvn" path="res://tilemap.tscn" id="9_kek77"]
 
 [node name="Game" type="Node2D"]
@@ -15,7 +15,6 @@
 [node name="Player" parent="." instance=ExtResource("1_ig7tw")]
 
 [node name="Zombiemanager" parent="." instance=ExtResource("2_5vw27")]
-zombie_scene = ExtResource("2_0xm2m")
 
 [node name="Resourcespawner" parent="." instance=ExtResource("4_7mycd")]
 resource_scene = ExtResource("5_lquwl")
@@ -25,5 +24,7 @@ resource_scene = ExtResource("5_lquwl")
 [node name="Craftingui" parent="." instance=ExtResource("7_5vw27")]
 
 [node name="Inventory" parent="." instance=ExtResource("6_7mycd")]
+
+[node name="Death" parent="." instance=ExtResource("8_kek77")]
 
 [node name="Tilemap" parent="." instance=ExtResource("9_kek77")]
