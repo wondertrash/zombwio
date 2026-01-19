@@ -19,6 +19,7 @@ func spawn_zombie():
 	var spawn_pos = get_valid_spawn_location(player.global_position)
 	var zombie = zombie_scene.instantiate()
 	zombie.global_position = spawn_pos
+	zombie.rotation = randf() * TAU
 	get_tree().current_scene.call_deferred("add_child", zombie)
 	zombies.append(zombie)
 func get_valid_spawn_location(player_pos: Vector2) -> Vector2:

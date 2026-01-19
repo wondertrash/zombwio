@@ -7,8 +7,8 @@ var max_health: float = 255.0
 var invincibility_time: float = 0.1
 var current_health: float = max_health
 var max_hunger: float = 255.0
-var hunger_drain_rate: float = 1.0
-var hunger_damage_rate: float = 3.0
+var hunger_drain_rate: float = 4.0
+var hunger_damage_rate: float = 16.0
 var current_hunger: float = max_hunger
 var berry_health: float = 10.0
 var regen_delay: float = 8.0
@@ -26,7 +26,9 @@ var is_dead := false
 var inventory: Dictionary = {
 	"wood": 0,
 	"stone": 0,
-	"berries": 0
+	"berries": 0,
+	"copper": 0,
+	"fiber": 0
 }
 func _ready():
 	add_to_group("player")
@@ -66,7 +68,7 @@ func _process(delta):
 	current_hunger -= hunger_drain_rate * delta
 	current_hunger = clamp(current_hunger, 0, max_hunger)
 	if current_hunger <= 0:
-		take_damage(int(hunger_damage_rate * delta))
+		take_damage(hunger_damage_rate * delta)
 	time_since_last_damage += delta
 	if time_since_last_damage >= regen_delay and current_health < max_health:
 		current_health += regen_rate * delta
@@ -88,7 +90,7 @@ func _perform_attack():
 		melee_attack()
 	await get_tree().create_timer(0.3).timeout
 	can_attack = true
-func take_damage(amount: int):
+func take_damage(amount: float):
 	if is_invincible:
 		return
 	current_health -= amount
