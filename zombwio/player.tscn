@@ -13,7 +13,6 @@ script = ExtResource("1_onrkg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_sh265")
-disabled = true
 
 [node name="body" type="Sprite2D" parent="."]
 texture = ExtResource("1_4flbx")

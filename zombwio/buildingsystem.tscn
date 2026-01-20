@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://5gf8av4v0ysw"]
+
+[ext_resource type="Script" uid="uid://dsc51v8hhb36v" path="res://buildingsystem.gd" id="1_gfqv4"]
+
+[node name="Buildingsystem" type="Node"]
+script = ExtResource("1_gfqv4")

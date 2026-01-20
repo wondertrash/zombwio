@@ -10,6 +10,8 @@ var can_attack_player: bool = true
 var direction: Vector2 = Vector2.ZERO
 var player: Node2D = null
 var is_chasing: bool = false
+var wander_timer: float = 0.0
+var wander_direction: Vector2 = Vector2.ZERO
 func _ready():
 	add_to_group("zombie")
 	player = get_tree().get_first_node_in_group("player")
@@ -32,7 +34,13 @@ func _physics_process(delta):
 				await get_tree().create_timer(attack_cooldown).timeout
 				can_attack_player = true
 	else:
-		direction = Vector2.ZERO
+		wander_timer -= delta
+		if wander_timer <= 0:
+			wander_direction = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
+			wander_timer = randf_range(2.0, 4.0)
+		direction = wander_direction
+		if direction != Vector2.ZERO:
+			rotation = direction.angle()
 	velocity = direction * move_speed
 	move_and_slide()
 func take_damage(amount: int):

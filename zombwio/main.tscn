@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://coju2hp6gsoeu"]
+[gd_scene load_steps=11 format=3 uid="uid://coju2hp6gsoeu"]
 
 [ext_resource type="PackedScene" uid="uid://deufn2gdbfua0" path="res://player.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://dnorke7acoblq" path="res://zombiemanager.tscn" id="2_5vw27"]
 [ext_resource type="PackedScene" uid="uid://c7skidgv0to3" path="res://healthui.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://8e1odnim7q4r" path="res://resourcespawner.tscn" id="4_7mycd"]
+[ext_resource type="PackedScene" uid="uid://5gf8av4v0ysw" path="res://buildingsystem.tscn" id="5_4c57u"]
 [ext_resource type="PackedScene" uid="uid://bar8k7n2xq0yo" path="res://resource.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://dmsjjuy628sjf" path="res://inventory.tscn" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://c8mnghp2eidw0" path="res://craftingui.tscn" id="7_5vw27"]
@@ -18,6 +19,8 @@
 
 [node name="Resourcespawner" parent="." instance=ExtResource("4_7mycd")]
 resource_scene = ExtResource("5_lquwl")
+
+[node name="Buildingsystem" parent="." instance=ExtResource("5_4c57u")]
 
 [node name="Healthui" parent="." instance=ExtResource("4_1bvp3")]
 

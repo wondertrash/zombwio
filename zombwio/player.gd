@@ -7,8 +7,8 @@ var max_health: float = 255.0
 var invincibility_time: float = 0.1
 var current_health: float = max_health
 var max_hunger: float = 255.0
-var hunger_drain_rate: float = 4.0
-var hunger_damage_rate: float = 16.0
+var hunger_drain_rate: float = 3.0
+var hunger_damage_rate: float = 15.0
 var current_hunger: float = max_hunger
 var berry_health: float = 10.0
 var regen_delay: float = 8.0
@@ -19,6 +19,8 @@ var current_weapon: String = "fist"
 var projectile_scene = preload("res://projectile.tscn")
 var survival_time: float = 0.0
 var is_invincible: bool = false
+var near_campfire: bool = false
+var campfire_hunger_multiplier: float = 0.2
 var cardinal_direction: Vector2 = Vector2.DOWN
 var speed_multiplier: float = 1.0
 var default_speed: float = 100.0
@@ -65,7 +67,8 @@ func _process(delta):
 		dir.y += 1
 	if Input.is_action_pressed("ui_left"):
 		dir.x -= 1
-	current_hunger -= hunger_drain_rate * delta
+	var drain_multiplier = campfire_hunger_multiplier if near_campfire else 1.0
+	current_hunger -= hunger_drain_rate * drain_multiplier * delta
 	current_hunger = clamp(current_hunger, 0, max_hunger)
 	if current_hunger <= 0:
 		take_damage(hunger_damage_rate * delta)
@@ -144,3 +147,10 @@ func shoot_projectile():
 	else:
 		projectile.damage = 40
 	get_parent().add_child(projectile)
+func heal(amount: float):
+	current_health += amount
+	current_health = clamp(current_health, 0, max_health)
+func set_near_campfire(value: bool):
+	near_campfire = value
+#ghost blocks affect zombies
+#zombies spawn outside map

@@ -25,7 +25,7 @@ func spawn_zombie():
 func get_valid_spawn_location(player_pos: Vector2) -> Vector2:
 	var pos = Vector2.ZERO
 	var attempts = 0
-	while attempts <= 80:
+	while attempts <= 64:
 		pos = Vector2(
 			randf_range(spawn_buffer, map_size.x - spawn_buffer),
 			randf_range(spawn_buffer, map_size.y - spawn_buffer)
