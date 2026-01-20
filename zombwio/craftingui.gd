@@ -3,15 +3,15 @@ extends CanvasLayer
 var panel: Panel
 var is_open: bool = false
 var recipes = {
-	"Fist": {"wood": 0, "stone": 0, "copper": 0, "fiber": 0, "damage": 10, "range": 30, "type": "melee"},
-	"Spear": {"wood": 5, "stone": 2, "copper": 0, "fiber": 0, "damage": 20, "range": 50, "type": "melee"},
+	"Fist": {"wood": 0, "stone": 0, "copper": 0, "fiber": 0, "damage": 10, "range": 25, "type": "melee"},
+	"Spear": {"wood": 5, "stone": 2, "copper": 0, "fiber": 0, "damage": 20, "range": 35, "type": "melee"},
 	"Bow": {"wood": 10, "stone": 0, "copper": 0, "fiber": 5, "damage": 40, "range": 200, "type": "bow"},
-	"Crossbow": {"wood": 15, "stone": 5, "copper": 3, "fiber": 8, "damage": 60, "range": 250, "type": "bow"},
+	"Crossbow": {"wood": 15, "stone": 5, "copper": 3, "fiber": 8, "damage": 60, "range": 250, "type": "crossbow"},
 	"Gun": {"wood": 5, "stone": 0, "copper": 10, "fiber": 0, "damage": 80, "range": 300, "type": "gun"},
 	"Bandage": {"wood": 0, "stone": 0, "copper": 0, "fiber": 3, "damage": 0, "range": 0, "type": "heal"},
 	"Health Potion": {"wood": 0, "stone": 0, "copper": 1, "fiber": 0, "damage": 0, "range": 0, "type": "heal"},
 	"Leather Armour": {"wood": 0, "stone": 0, "copper": 10, "fiber": 20, "damage": 0, "range": 0, "type": "armour"},
-	"Copper Armour": {"wood": 0, "stone": 10, "copper": 15, "fiber": 5, "damage": 0, "range": 0, "type": "armour"}
+	"Copper Armour": {"wood": 0, "stone": 0, "copper": 15, "fiber": 5, "damage": 0, "range": 0, "type": "armour"}
 }
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS

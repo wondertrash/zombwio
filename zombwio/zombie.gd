@@ -43,6 +43,9 @@ func _physics_process(delta):
 			rotation = direction.angle()
 	velocity = direction * move_speed
 	move_and_slide()
+	var map_size = Vector2(5120, 3840)
+	global_position.x = clamp(global_position.x, 0, map_size.x)
+	global_position.y = clamp(global_position.y, 0, map_size.y)
 func take_damage(amount: int):
 	health -= amount
 	modulate = Color(1, 0.3, 0.3)

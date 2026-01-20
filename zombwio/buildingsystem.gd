@@ -45,7 +45,19 @@ func set_buildable(type: String):
 	elif type == "campfire":
 		ghost_preview = campfire_scene.instantiate()
 	ghost_preview.modulate = Color(1, 1, 1, 0.5)
+	if ghost_preview is StaticBody2D or ghost_preview is CharacterBody2D:
+		ghost_preview.set_collision_layer_value(1, false)
+		ghost_preview.set_collision_mask_value(1, false)
+	_disable_all_collision(ghost_preview)
 	get_tree().current_scene.add_child(ghost_preview)
+func _disable_all_collision(node: Node):
+	for child in node.get_children():
+		if child is CollisionShape2D:
+			child.disabled = true
+		elif child is Area2D or child is StaticBody2D:
+			child.set_collision_layer_value(1, false)
+			child.set_collision_mask_value(1, false)
+		_disable_all_collision(child)
 func try_place_structure():
 	var player = get_tree().get_first_node_in_group("player")
 	if not player:

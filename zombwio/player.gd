@@ -87,7 +87,7 @@ func _physics_process(_delta):
 		_perform_attack()
 func _perform_attack():
 	can_attack = false
-	if current_weapon == "bow" or current_weapon == "gun":
+	if current_weapon == "bow" or current_weapon == "crossbow" or current_weapon == "gun":
 		shoot_projectile()
 	else:
 		melee_attack()
@@ -143,8 +143,13 @@ func shoot_projectile():
 	projectile.direction = global_position.direction_to(get_global_mouse_position())
 	projectile.rotation = projectile.direction.angle()
 	if current_weapon == "gun":
+		projectile.projectile_type = "bullet"
 		projectile.damage = 80
-	else:
+	elif current_weapon == "crossbow":
+		projectile.projectile_type = "bolt"
+		projectile.damage = 50
+	elif current_weapon == "bow":
+		projectile.projectile_type = "arrow"
 		projectile.damage = 40
 	get_parent().add_child(projectile)
 func heal(amount: float):
@@ -152,5 +157,7 @@ func heal(amount: float):
 	current_health = clamp(current_health, 0, max_health)
 func set_near_campfire(value: bool):
 	near_campfire = value
-#ghost blocks affect zombies
-#zombies spawn outside map
+#add attack anims and states
+#weapon firerate
+#fix startmenuand deathscreen in itch.io
+#buildings offset, should be downleft by 16px; building one building depletes resources instantly(hold?)

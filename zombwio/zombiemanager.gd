@@ -33,4 +33,7 @@ func get_valid_spawn_location(player_pos: Vector2) -> Vector2:
 		if pos.distance_to(player_pos) > spawn_distance:
 			return pos
 		attempts += 1
-	return player_pos + Vector2(spawn_distance, 0).rotated(randf() * TAU)
+	var fallback = player_pos + Vector2(spawn_distance, 0).rotated(randf() * TAU)
+	fallback.x = clamp(fallback.x, spawn_buffer, map_size.x - spawn_buffer)
+	fallback.y = clamp(fallback.y, spawn_buffer, map_size.y - spawn_buffer)
+	return fallback
