@@ -20,6 +20,13 @@ var projectile_scene = preload("res://projectile.tscn")
 var survival_time: float = 0.0
 var is_invincible: bool = false
 var near_campfire: bool = false
+var is_attacking: bool = false
+var attack_sprite: Sprite2D = null
+var idle_sprite: Sprite2D = null
+var mace_sprite: Sprite2D
+var bow_sprite: Sprite2D
+var crossbow_sprite: Sprite2D
+var gun_sprite: Sprite2D
 var campfire_hunger_multiplier: float = 0.2
 var cardinal_direction: Vector2 = Vector2.DOWN
 var speed_multiplier: float = 1.0
@@ -35,6 +42,29 @@ var inventory: Dictionary = {
 func _ready():
 	add_to_group("player")
 	current_health = max_health
+	idle_sprite = Sprite2D.new()
+	idle_sprite.texture = load("res://images/player.png")
+	add_child(idle_sprite)
+	attack_sprite = Sprite2D.new()
+	attack_sprite.texture = load("res://images/hands_attack.png")
+	attack_sprite.visible = false
+	add_child(attack_sprite)
+	mace_sprite = Sprite2D.new()
+	mace_sprite.texture = load("res://images/mace.png")
+	mace_sprite.visible = false
+	add_child(mace_sprite)
+	bow_sprite = Sprite2D.new()
+	bow_sprite.texture = load("res://images/bow.png")
+	bow_sprite.visible = false
+	add_child(bow_sprite)
+	crossbow_sprite = Sprite2D.new()
+	crossbow_sprite.texture = load("res://images/crossbow.png")
+	crossbow_sprite.visible = false
+	add_child(crossbow_sprite)
+	gun_sprite = Sprite2D.new()
+	gun_sprite.texture = load("res://images/gun.png")
+	gun_sprite.visible = false
+	add_child(gun_sprite)
 	var map_size = Vector2(5120, 3840)
 	global_position = Vector2(
 		randf_range(16, map_size.x - 16),
@@ -87,9 +117,22 @@ func _physics_process(_delta):
 		_perform_attack()
 func _perform_attack():
 	can_attack = false
-	if current_weapon == "bow" or current_weapon == "crossbow" or current_weapon == "gun":
+	is_attacking = true
+	idle_sprite.visible = false
+	if current_weapon == "gun":
+		gun_sprite.visible = true
 		shoot_projectile()
+	elif current_weapon == "crossbow":
+		crossbow_sprite.visible = true
+		shoot_projectile()
+	elif current_weapon == "bow":
+		bow_sprite.visible = true
+		shoot_projectile()
+	elif current_weapon == "mace":
+		mace_sprite.visible = true
+		melee_attack()
 	else:
+		attack_sprite.visible = true
 		melee_attack()
 	var cooldown = 0.5
 	if current_weapon == "bow" or current_weapon == "crossbow":
@@ -97,6 +140,13 @@ func _perform_attack():
 	elif current_weapon == "gun":
 		cooldown = 1.6
 	await get_tree().create_timer(cooldown).timeout
+	is_attacking = false
+	attack_sprite.visible = false
+	mace_sprite.visible = false
+	bow_sprite.visible = false
+	crossbow_sprite.visible = false
+	gun_sprite.visible = false
+	idle_sprite.visible = true
 	can_attack = true
 func take_damage(amount: float):
 	if is_invincible:
@@ -148,12 +198,15 @@ func shoot_projectile():
 	projectile.direction = global_position.direction_to(get_global_mouse_position())
 	projectile.rotation = projectile.direction.angle()
 	if current_weapon == "gun":
+		gun_sprite.visible = true
 		projectile.projectile_type = "bullet"
 		projectile.damage = 80
 	elif current_weapon == "crossbow":
+		crossbow_sprite.visible = true
 		projectile.projectile_type = "bolt"
 		projectile.damage = 50
 	elif current_weapon == "bow":
+		bow_sprite.visible = true
 		projectile.projectile_type = "arrow"
 		projectile.damage = 40
 	get_parent().add_child(projectile)
@@ -162,4 +215,4 @@ func heal(amount: float):
 	current_health = clamp(current_health, 0, max_health)
 func set_near_campfire(value: bool):
 	near_campfire = value
-#add attack anims and states
+#arch for melee weapons

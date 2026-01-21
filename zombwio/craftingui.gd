@@ -4,7 +4,7 @@ var panel: Panel
 var is_open: bool = false
 var recipes = {
 	"Fist": {"wood": 0, "stone": 0, "copper": 0, "fiber": 0, "damage": 10, "range": 25, "type": "melee"},
-	"Spear": {"wood": 5, "stone": 2, "copper": 0, "fiber": 0, "damage": 20, "range": 35, "type": "melee"},
+	"Mace": {"wood": 5, "stone": 2, "copper": 0, "fiber": 0, "damage": 20, "range": 35, "type": "melee"},
 	"Bow": {"wood": 10, "stone": 0, "copper": 0, "fiber": 5, "damage": 40, "range": 200, "type": "bow"},
 	"Crossbow": {"wood": 15, "stone": 5, "copper": 3, "fiber": 8, "damage": 60, "range": 250, "type": "crossbow"},
 	"Gun": {"wood": 5, "stone": 0, "copper": 10, "fiber": 0, "damage": 80, "range": 300, "type": "gun"},
@@ -58,19 +58,28 @@ func _craft_item(item_name: String):
 		player.inventory["copper"] -= recipe["copper"]
 		player.inventory["fiber"] -= recipe["fiber"]
 		if recipe["type"] == "melee" or recipe["type"] == "bow" or recipe["type"] == "gun":
-			player.current_weapon = recipe["type"]
+			if item_name == "Mace":
+				player.current_weapon = "mace"
+			elif item_name == "Bow":
+				player.current_weapon = "bow"
+			elif item_name == "Crossbow":
+				player.current_weapon = "crossbow"
+			elif item_name == "Gun":
+				player.current_weapon = "gun"
+			else:
+				player.current_weapon = "fist"
 			player.attack_damage = recipe["damage"]
 			player.attack_range = recipe["range"]
 		elif recipe["type"] == "heal":
 			if item_name == "Bandage":
 				player.current_health += 60
-			else:
+			elif item_name == "Health Potion":
 				player.current_health += 200
 			player.current_health = clamp(player.current_health, 0, player.max_health)
 		elif recipe["type"] == "armour":
 			if item_name == "Copper Armour":
 				player.max_health += 100
-			else:
+			elif item_name == "Leather Armour":
 				player.max_health += 50
 		panel.modulate = Color(0.5, 1, 0.5)
 		await get_tree().create_timer(0.2).timeout
