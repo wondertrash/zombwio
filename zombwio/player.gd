@@ -91,7 +91,12 @@ func _perform_attack():
 		shoot_projectile()
 	else:
 		melee_attack()
-	await get_tree().create_timer(0.3).timeout
+	var cooldown = 0.5
+	if current_weapon == "bow" or current_weapon == "crossbow":
+		cooldown = 1.0
+	elif current_weapon == "gun":
+		cooldown = 1.6
+	await get_tree().create_timer(cooldown).timeout
 	can_attack = true
 func take_damage(amount: float):
 	if is_invincible:
@@ -158,6 +163,5 @@ func heal(amount: float):
 func set_near_campfire(value: bool):
 	near_campfire = value
 #add attack anims and states
-#weapon firerate
-#fix startmenuand deathscreen in itch.io
-#buildings offset, should be downleft by 16px; building one building depletes resources instantly(hold?)
+#fix startmenu and deathscreen in itch.io (only taking up top left quarter of screen)
+#buildings can be placed outside map

@@ -7,6 +7,7 @@ var current_buildable: String = ""
 var buildables = ["wall", "door", "campfire"]
 var current_buildable_index = 0
 var ghost_preview: Node2D = null
+var can_place: bool = true
 func _ready() -> void:
 	pass
 func _process(_delta):
@@ -22,10 +23,14 @@ func _process(_delta):
 	if build_mode and ghost_preview:
 		var camera = get_viewport().get_camera_2d()
 		if camera:
-			ghost_preview.global_position = camera.get_global_mouse_position()
-		ghost_preview.global_position = ghost_preview.global_position.snapped(Vector2(32, 32))
-		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			var mouse_pos = camera.get_global_mouse_position()
+			ghost_preview.global_position = mouse_pos.snapped(Vector2(32, 32))
+			ghost_preview.global_position += Vector2(-16, 16)
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and can_place:
 			try_place_structure()
+			can_place = false
+		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			can_place = true
 func toggle_build_mode():
 	build_mode = !build_mode
 	if build_mode:
