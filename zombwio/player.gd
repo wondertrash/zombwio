@@ -131,7 +131,7 @@ func _perform_attack():
 	elif current_weapon == "mace":
 		mace_sprite.visible = true
 		melee_attack()
-	else:
+	elif current_weapon == "fist":
 		attack_sprite.visible = true
 		melee_attack()
 	var cooldown = 0.5
@@ -176,13 +176,35 @@ func eat_food(amount: float):
 	current_health += berry_health
 	current_health = clamp(current_health, 0, max_health)
 func melee_attack():
+	var slash = Node2D.new()
+	var mouse_dir = global_position.direction_to(get_global_mouse_position())
+	slash.global_position = global_position
+	slash.rotation = mouse_dir.angle()
+	var arc_sprite = Sprite2D.new()
+	var polygon = Polygon2D.new()
+	var points = PackedVector2Array()
+	var inner_radius = attack_range * 0.8
+	var outer_radius = attack_range
+	var angle_start = -PI/3
+	var angle_end = PI/3
+	var segments = 16
+	points.append(Vector2.ZERO)
+	for i in range(segments + 1):
+		var angle = lerp(angle_start, angle_end, float(i) / segments)
+		points.append(Vector2(cos(angle), sin(angle)) * outer_radius)
+	for i in range(segments, -1, -1):
+		var angle = lerp(angle_start, angle_end, float(i) / segments)
+		points.append(Vector2(cos(angle), sin(angle)) * inner_radius)
+	polygon.polygon = points
+	polygon.color = Color(1, 1, 1, 0.64)
+	slash.add_child(polygon)
+	get_parent().add_child(slash)
 	var hitbox = Area2D.new()
 	var collision = CollisionShape2D.new()
 	var shape = CircleShape2D.new()
 	shape.radius = attack_range
 	collision.shape = shape
 	hitbox.add_child(collision)
-	var mouse_dir = global_position.direction_to(get_global_mouse_position())
 	hitbox.global_position = global_position + mouse_dir * attack_range
 	get_parent().add_child(hitbox)
 	hitbox.body_entered.connect(func(body):
@@ -191,6 +213,10 @@ func melee_attack():
 	)
 	await get_tree().process_frame
 	await get_tree().create_timer(0.1).timeout
+	var tween = create_tween()
+	tween.tween_property(polygon, "modulate:a", 0.0, 0.15)
+	await tween.finished
+	slash.queue_free()
 	hitbox.queue_free()
 func shoot_projectile():
 	var projectile = projectile_scene.instantiate()
@@ -215,4 +241,3 @@ func heal(amount: float):
 	current_health = clamp(current_health, 0, max_health)
 func set_near_campfire(value: bool):
 	near_campfire = value
-#arch for melee weapons

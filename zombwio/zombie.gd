@@ -9,11 +9,20 @@ extends CharacterBody2D
 var can_attack_player: bool = true
 var direction: Vector2 = Vector2.ZERO
 var player: Node2D = null
+var zombie_attack_sprite: Sprite2D = null
+var zombie_idle_sprite: Sprite2D = null
 var is_chasing: bool = false
 var wander_timer: float = 0.0
 var wander_direction: Vector2 = Vector2.ZERO
 func _ready():
 	add_to_group("zombie")
+	zombie_idle_sprite = Sprite2D.new()
+	zombie_idle_sprite.texture = load("res://images/zombie.png")
+	add_child(zombie_idle_sprite)
+	zombie_attack_sprite = Sprite2D.new()
+	zombie_attack_sprite.texture = load("res://images/zombiehands_attack.png")
+	zombie_attack_sprite.visible = false
+	add_child(zombie_attack_sprite)
 	player = get_tree().get_first_node_in_group("player")
 func _physics_process(delta):
 	if player == null:
@@ -29,9 +38,13 @@ func _physics_process(delta):
 		rotation = angle
 		if distance_to_player < attack_range and can_attack_player:
 			if player.has_method("take_damage"):
+				zombie_idle_sprite.visible = false
+				zombie_attack_sprite.visible = true
 				player.take_damage(attack_damage)
 				can_attack_player = false
 				await get_tree().create_timer(attack_cooldown).timeout
+				zombie_idle_sprite.visible = true
+				zombie_attack_sprite.visible = false
 				can_attack_player = true
 	else:
 		wander_timer -= delta
