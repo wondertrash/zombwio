@@ -6,6 +6,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 func show_death_screen(time: float):
+	var player = get_tree().get_first_node_in_group("player")
+	var zombie = get_tree().get_first_node_in_group("zombie")
 	survival_time = time
 	visible = true
 	get_tree().paused = true
@@ -16,15 +18,24 @@ func show_death_screen(time: float):
 	add_child(bg)
 	var death_text = Label.new()
 	death_text.text = "You Died"
-	death_text.position = Vector2(viewport_size.x / 2 - 100, 150)
+	death_text.position = Vector2(viewport_size.x / 2 - 100, 80)
 	death_text.add_theme_font_size_override("font_size", 48)
 	death_text.modulate = Color(1, 0, 0)
 	add_child(death_text)
 	var time_text = Label.new()
 	time_text.text = "Survived: %.1f seconds" % survival_time
-	time_text.position = Vector2(viewport_size.x / 2 - 130, 220)
+	time_text.position = Vector2(viewport_size.x / 2 - 130, 150)
 	time_text.add_theme_font_size_override("font_size", 24)
 	add_child(time_text)
+	var stats_text = Label.new()
+	stats_text.text = "Zombies Killed: %d\nResources Collected: %d\nBuildings Placed: %d" % [
+		zombie.zombies_killed if player else 0,
+		player.resources_collected if player else 0,
+		player.buildings_placed if player else 0
+	]
+	stats_text.position = Vector2(viewport_size.x / 2 - 120, 200)
+	stats_text.add_theme_font_size_override("font_size", 18)
+	add_child(stats_text)
 	var restart_btn = Button.new()
 	restart_btn.text = "Restart"
 	restart_btn.position = Vector2(viewport_size.x / 2 - 70, 300)

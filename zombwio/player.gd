@@ -29,6 +29,8 @@ var crossbow_sprite: Sprite2D
 var gun_sprite: Sprite2D
 var campfire_hunger_multiplier: float = 0.2
 var cardinal_direction: Vector2 = Vector2.DOWN
+var resources_collected: int = 0
+var buildings_placed: int = 0
 var speed_multiplier: float = 1.0
 var default_speed: float = 100.0
 var is_dead := false
@@ -166,6 +168,7 @@ func die():
 	if death_screen:
 		death_screen.show_death_screen(survival_time)
 func collect_resource(type: String, amount: int):
+	resources_collected += amount
 	if type == "berries":
 		eat_food(40)
 	else:

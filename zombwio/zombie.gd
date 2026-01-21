@@ -14,6 +14,7 @@ var zombie_idle_sprite: Sprite2D = null
 var is_chasing: bool = false
 var wander_timer: float = 0.0
 var wander_direction: Vector2 = Vector2.ZERO
+var zombies_killed: int = 0
 func _ready():
 	add_to_group("zombie")
 	zombie_idle_sprite = Sprite2D.new()
@@ -61,8 +62,25 @@ func _physics_process(delta):
 	global_position.y = clamp(global_position.y, 0, map_size.y)
 func take_damage(amount: int):
 	health -= amount
-	modulate = Color(1, 0.3, 0.3)
+	modulate = Color(1, 0.5, 0.5)
 	await get_tree().create_timer(0.1).timeout
 	modulate = Color(1, 1, 1)
 	if health <= 0:
+		zombies_killed += 1
+		var blood = Node2D.new()
+		blood.global_position = global_position
+		for i in range (8):
+			var particle = Sprite2D.new()
+			var texture = PlaceholderTexture2D.new()
+			texture.size = Vector2(4, 4)
+			particle.texture = texture
+			particle.modulate = Color(0.6, 0, 0)
+			blood.add_child(particle)
+			var angle = randf() * TAU
+			var distance = randf_range(8, 32)
+			particle.position = Vector2(cos(angle), sin(angle)) * distance
+		get_parent().add_child(blood)
+		var tween = get_tree().create_tween()
+		tween.tween_property(blood, "modulate:a", 0.0, 2.0)
+		tween.finished.connect(blood.queue_free)
 		queue_free()

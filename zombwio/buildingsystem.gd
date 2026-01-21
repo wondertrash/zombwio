@@ -8,8 +8,12 @@ var buildables = ["wall", "door", "campfire"]
 var current_buildable_index = 0
 var ghost_preview: Node2D = null
 var can_place: bool = true
+var cost_label: Label = null
 func _ready() -> void:
-	pass
+	cost_label = Label.new()
+	cost_label.add_theme_font_size_override("font_size", 18)
+	cost_label.visible = false
+	add_child(cost_label)
 func _process(_delta):
 	if Input.is_action_just_pressed("build"):
 		toggle_build_mode()
@@ -26,11 +30,23 @@ func _process(_delta):
 			var mouse_pos = camera.get_global_mouse_position()
 			ghost_preview.global_position = mouse_pos.snapped(Vector2(32, 32))
 			ghost_preview.global_position += Vector2(-16, 16)
+			cost_label.visible = true
+			cost_label.global_position = get_viewport().get_mouse_position() + Vector2(20, -20)
+			var cost = get_build_cost(current_buildable)
+			var cost_text = current_buildable + ": "
+			var parts = []
+			if cost.get("wood", 0) > 0: parts.append("W:%d" % cost["wood"])
+			if cost.get("stone", 0) > 0: parts.append("S:%d" % cost["stone"])
+			if cost.get("copper", 0) > 0: parts.append("C:%d" % cost["copper"])
+			if cost.get("fiber", 0) > 0: parts.append("F:%d" % cost["fiber"])
+			cost_label.text = cost_text + ", ".join(parts)
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and can_place:
 			try_place_structure()
 			can_place = false
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			can_place = true
+	else:
+		cost_label.visible = false
 func toggle_build_mode():
 	build_mode = !build_mode
 	if build_mode:
@@ -81,10 +97,13 @@ func try_place_structure():
 	var structure = null
 	if current_buildable == "wall":
 		structure = wall_scene.instantiate()
+		player.buildings_placed += 1
 	elif current_buildable == "door":
 		structure = door_scene.instantiate()
+		player.buildings_placed += 1
 	elif current_buildable == "campfire":
 		structure = campfire_scene.instantiate()
+		player.buildings_placed += 1
 	structure.global_position = ghost_preview.global_position
 	get_tree().current_scene.add_child(structure)
 func get_build_cost(type: String) -> Dictionary:
@@ -101,4 +120,4 @@ func can_afford(player, cost: Dictionary) -> bool:
 	for resource in cost:
 		if player.inventory.get(resource, 0) < cost[resource]:
 			return false
-	return true
+	return true	
