@@ -163,5 +163,3 @@ func heal(amount: float):
 func set_near_campfire(value: bool):
 	near_campfire = value
 #add attack anims and states
-#fix startmenu and deathscreen in itch.io (only taking up top left quarter of screen)
-#buildings can be placed outside map

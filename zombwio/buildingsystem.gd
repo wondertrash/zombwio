@@ -72,6 +72,10 @@ func try_place_structure():
 		return
 	if ghost_preview.global_position.distance_to(player.global_position) > 100:
 		return
+	var map_size = Vector2(5120, 3840)
+	var pos = ghost_preview.global_position
+	if pos.x < 0 or pos.x > map_size.x or pos.y < 0 or pos.y > map_size.y:
+		return
 	for resource in cost:
 		player.inventory[resource] -= cost[resource]
 	var structure = null
