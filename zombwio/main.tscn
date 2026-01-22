@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://coju2hp6gsoeu"]
+[gd_scene load_steps=12 format=3 uid="uid://coju2hp6gsoeu"]
 
 [ext_resource type="PackedScene" uid="uid://deufn2gdbfua0" path="res://player.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://dnorke7acoblq" path="res://zombiemanager.tscn" id="2_5vw27"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://c8mnghp2eidw0" path="res://craftingui.tscn" id="7_5vw27"]
 [ext_resource type="PackedScene" uid="uid://byc8rnaje70ob" path="res://death.tscn" id="8_kek77"]
 [ext_resource type="PackedScene" uid="uid://dcm7x7iexitvn" path="res://tilemap.tscn" id="9_kek77"]
+[ext_resource type="PackedScene" uid="uid://u1b8j4l14ofm" path="res://daynightcycle.tscn" id="10_efxa6"]
 
 [node name="Game" type="Node2D"]
 
@@ -29,5 +30,7 @@ resource_scene = ExtResource("5_lquwl")
 [node name="Inventory" parent="." instance=ExtResource("6_7mycd")]
 
 [node name="Death" parent="." instance=ExtResource("8_kek77")]
+
+[node name="Daynightcycle" parent="." instance=ExtResource("10_efxa6")]
 
 [node name="Tilemap" parent="." instance=ExtResource("9_kek77")]

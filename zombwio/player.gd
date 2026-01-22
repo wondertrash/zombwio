@@ -244,3 +244,6 @@ func heal(amount: float):
 	current_health = clamp(current_health, 0, max_health)
 func set_near_campfire(value: bool):
 	near_campfire = value
+#make day go from 12:00 - 00:00 to 7:00 to 19:00
+#make night go from 00:00 - 12:00 to 19:00 - 7:00
+#randomize player spawn time

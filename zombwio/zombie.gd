@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var attack_damage: float = 14
 @export var attack_range: int = 35
 @export var attack_cooldown: float = 0.4
+var base_speed: float = 35.0
 var can_attack_player: bool = true
 var direction: Vector2 = Vector2.ZERO
 var player: Node2D = null
@@ -17,6 +18,7 @@ var wander_direction: Vector2 = Vector2.ZERO
 var zombies_killed: int = 0
 func _ready():
 	add_to_group("zombie")
+	base_speed = move_speed
 	zombie_idle_sprite = Sprite2D.new()
 	zombie_idle_sprite.texture = load("res://images/zombie.png")
 	add_child(zombie_idle_sprite)
@@ -25,6 +27,12 @@ func _ready():
 	zombie_attack_sprite.visible = false
 	add_child(zombie_attack_sprite)
 	player = get_tree().get_first_node_in_group("player")
+func _process(delta):
+	var day_night = get_tree().current_scene.get_node_or_null("Daynightcycle")
+	if day_night and day_night.is_night():
+		move_speed = base_speed * 2.0
+	else:
+		move_speed = base_speed
 func _physics_process(delta):
 	if player == null:
 		return
