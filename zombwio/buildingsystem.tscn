@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" uid="uid://dsc51v8hhb36v" path="res://buildingsystem.gd" id="1_gfqv4"]
 
-[node name="Buildingsystem" type="Node"]
+[node name="Buildingsystem" type="CanvasLayer"]
 script = ExtResource("1_gfqv4")

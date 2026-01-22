@@ -1,4 +1,4 @@
-extends Node
+extends CanvasLayer
 var wall_scene = preload("res://wall.tscn")
 var door_scene = preload("res://door.tscn")
 var campfire_scene = preload("res://campfire.tscn")
@@ -13,6 +13,7 @@ func _ready() -> void:
 	cost_label = Label.new()
 	cost_label.add_theme_font_size_override("font_size", 18)
 	cost_label.visible = false
+	cost_label.modulate = Color(1, 1, 0)
 	add_child(cost_label)
 func _process(_delta):
 	if Input.is_action_just_pressed("build"):
