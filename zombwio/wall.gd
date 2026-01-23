@@ -1,6 +1,7 @@
 extends StaticBody2D
 var health: float = 700.0
 func _ready():
+	add_to_group("wall")
 	var collision = CollisionShape2D.new()
 	var shape = RectangleShape2D.new()
 	shape.size = Vector2(32, 32)

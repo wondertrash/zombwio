@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4cioh86xyta3"]
+
+[ext_resource type="Script" uid="uid://colgaox7h6e7f" path="res://minimap.gd" id="1_yfyr0"]
+
+[node name="Minimap" type="CanvasLayer"]
+script = ExtResource("1_yfyr0")

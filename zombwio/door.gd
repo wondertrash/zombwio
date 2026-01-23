@@ -2,6 +2,7 @@ extends StaticBody2D
 var health: float = 500.0
 var is_open: bool = false
 func _ready():
+	add_to_group("door")
 	var collision = CollisionShape2D.new()
 	var shape = RectangleShape2D.new()
 	shape.size = Vector2(32, 32)

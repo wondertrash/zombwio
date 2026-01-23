@@ -3,6 +3,7 @@ var heal_rate: float = 8.0
 var hunger_reduction: float = 0.6
 var heal_area: Area2D
 func _ready():
+	add_to_group("campfire")
 	heal_area = Area2D.new()
 	var area_collision = CollisionShape2D.new()
 	var area_shape = CircleShape2D.new()
