@@ -43,6 +43,7 @@ func update_minimap():
 	var player_minimap_pos = world_to_minimap(player.global_position)
 	player_dot.position = minimap_position + player_minimap_pos - Vector2(2, 2)
 	for child in structure_container.get_children():
+		structure_container.remove_child(child)
 		child.queue_free()
 	var structures = []
 	structures.append_array(get_tree().get_nodes_in_group("wall"))
@@ -62,6 +63,9 @@ func update_minimap():
 				elif structure.is_in_group("campfre"):
 					dot.color = Color(1, 0.5, 0)
 				structure_container.add_child(dot)
+	for child in zombie_container.get_children():
+		zombie_container.remove_child(child)
+		child.queue_free()
 	var zombies = get_tree().get_nodes_in_group("zombie")
 	for zombie in zombies:
 		if is_instance_valid(zombie):

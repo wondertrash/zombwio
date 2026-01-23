@@ -6,7 +6,7 @@ var recipes = {
 	"Fist": {"wood": 0, "stone": 0, "copper": 0, "fiber": 0, "damage": 10, "range": 25, "type": "melee"},
 	"Mace": {"wood": 5, "stone": 2, "copper": 0, "fiber": 0, "damage": 20, "range": 35, "type": "melee"},
 	"Bow": {"wood": 10, "stone": 0, "copper": 0, "fiber": 5, "damage": 40, "range": 200, "type": "bow"},
-	"Crossbow": {"wood": 15, "stone": 5, "copper": 3, "fiber": 8, "damage": 60, "range": 250, "type": "crossbow"},
+	"Crossbow": {"wood": 15, "stone": 5, "copper": 3, "fiber": 8, "damage": 60, "range": 250, "type": "bow"},
 	"Gun": {"wood": 5, "stone": 0, "copper": 10, "fiber": 0, "damage": 80, "range": 300, "type": "gun"},
 	"Bandage": {"wood": 0, "stone": 0, "copper": 0, "fiber": 3, "damage": 0, "range": 0, "type": "heal"},
 	"Health Potion": {"wood": 0, "stone": 0, "copper": 1, "fiber": 0, "damage": 0, "range": 0, "type": "heal"},
@@ -57,7 +57,7 @@ func _craft_item(item_name: String):
 		player.inventory["stone"] -= recipe["stone"]
 		player.inventory["copper"] -= recipe["copper"]
 		player.inventory["fiber"] -= recipe["fiber"]
-		if recipe["type"] == "melee" or recipe["type"] == "bow" or recipe["type"] == "gun":
+		if recipe["type"] == "melee" or recipe["type"] == "bow"  or recipe["type"] == "gun":
 			if item_name == "Mace":
 				player.current_weapon = "mace"
 			elif item_name == "Bow":
