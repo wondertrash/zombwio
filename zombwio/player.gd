@@ -244,4 +244,4 @@ func heal(amount: float):
 	current_health = clamp(current_health, 0, max_health)
 func set_near_campfire(value: bool):
 	near_campfire = value
-#MORE CONTENT
+#more content
