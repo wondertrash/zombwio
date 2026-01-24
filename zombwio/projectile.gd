@@ -4,6 +4,7 @@ extends Area2D
 @export var lifetime: float = 3.0
 @export var projectile_type: String = "arrow"
 var direction: Vector2 = Vector2.ZERO
+var shooter: Node2D = null
 func _ready() -> void:
 	var sprite = Sprite2D.new()
 	if projectile_type == "arrow":
@@ -30,8 +31,10 @@ func _ready() -> void:
 	await get_tree().create_timer(lifetime).timeout
 	queue_free()
 func _process(delta: float) -> void:
-	position += direction * speed * delta
+	global_position += direction * speed * delta
 func _on_hit(body):
+	if body == shooter:
+		return
 	if body.is_in_group("zombie"):
 		body.take_damage(damage)
 		queue_free()

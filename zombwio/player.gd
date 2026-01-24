@@ -226,6 +226,7 @@ func shoot_projectile():
 	projectile.global_position = global_position
 	projectile.direction = global_position.direction_to(get_global_mouse_position())
 	projectile.rotation = projectile.direction.angle()
+	projectile.shooter = self
 	if current_weapon == "gun":
 		gun_sprite.visible = true
 		projectile.projectile_type = "bullet"
@@ -244,4 +245,3 @@ func heal(amount: float):
 	current_health = clamp(current_health, 0, max_health)
 func set_near_campfire(value: bool):
 	near_campfire = value
-#more content
