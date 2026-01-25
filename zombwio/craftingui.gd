@@ -13,6 +13,7 @@ var recipes = {
 	"Leather Armour": {"wood": 0, "stone": 0, "copper": 10, "fiber": 20, "damage": 0, "range": 0, "type": "armour"},
 	"Copper Armour": {"wood": 0, "stone": 0, "copper": 15, "fiber": 5, "damage": 0, "range": 0, "type": "armour"}
 }
+var craft_sound: AudioStream = load("res://sounds/craft.wav")
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	panel = Panel.new()
@@ -81,6 +82,7 @@ func _craft_item(item_name: String):
 				player.max_health += 100
 			elif item_name == "Leather Armour":
 				player.max_health += 50
+		play_sound(craft_sound)
 		panel.modulate = Color(0.5, 1, 0.5)
 		await get_tree().create_timer(0.2).timeout
 		panel.modulate = Color(1, 1, 1)
@@ -88,3 +90,9 @@ func _craft_item(item_name: String):
 		panel.modulate = Color(1, 0.5, 0.5)
 		await get_tree().create_timer(0.2).timeout
 		panel.modulate = Color(1, 1, 1)
+func play_sound(sound: AudioStream):
+	var player_node = AudioStreamPlayer.new()
+	player_node.stream = sound
+	add_child(player_node)
+	player_node.play()
+	player_node.finished.connect(player_node.queue_free)

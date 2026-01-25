@@ -45,6 +45,7 @@ var hit_sound: AudioStream = load("res://sounds/hit.wav")
 var eat_sound: AudioStream = load("res://sounds/eat.wav")
 var swing_sound: AudioStream = load("res://sounds/swing.wav")
 var shoot_sound: AudioStream = load("res://sounds/shoot.wav")
+var resource_sound: AudioStream = load("res://sounds/resource.wav")
 func _ready():
 	add_to_group("player")
 	current_health = max_health
@@ -173,6 +174,7 @@ func die():
 	if death_screen:
 		death_screen.show_death_screen(survival_time)
 func collect_resource(type: String, amount: int):
+	play_sound(resource_sound)
 	resources_collected += amount
 	if type == "berries":
 		eat_food(40)
@@ -259,4 +261,3 @@ func play_sound(sound: AudioStream):
 	add_child(player)
 	player.play()
 	player.finished.connect(player.queue_free)
-#more content

@@ -7,6 +7,7 @@ var can_shoot: bool = true
 var detection_area: Area2D
 var sprite: Sprite2D
 var is_ghost: bool = false
+var health: float = 1200.0
 func _ready():
 	add_to_group("turret")
 	sprite = Sprite2D.new()
@@ -60,3 +61,10 @@ func shoot_at(target: Node2D):
 	get_tree().current_scene.add_child(projectile)
 	await get_tree().create_timer(fire_rate).timeout
 	can_shoot = true
+func take_damage(amount: int):
+	health -= amount
+	modulate = Color(1, 0.5, 0.5)
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color(1, 1, 1)
+	if health <= 0:
+		queue_free()

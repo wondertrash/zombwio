@@ -16,6 +16,8 @@ var is_chasing: bool = false
 var wander_timer: float = 0.0
 var wander_direction: Vector2 = Vector2.ZERO
 var zombies_killed: int = 0
+var groan_sound: AudioStream = load("res://sounds/zombie_groan.wav")
+var groan_timer: float = 0.0
 func _ready():
 	add_to_group("zombie")
 	base_speed = move_speed
@@ -33,7 +35,13 @@ func _process(delta):
 		move_speed = base_speed * 2.0
 	else:
 		move_speed = base_speed
+	groan_timer -= delta
+	if groan_timer <= 0 and is_chasing:
+		groan_timer = randf_range(3.0, 8.0)
+		play_sound(groan_sound)
 func _physics_process(delta):
+	if player == null:
+		player = get_tree().get_first_node_in_group("player")
 	if player == null:
 		return
 	var distance_to_player = global_position.distance_to(player.global_position)
@@ -63,6 +71,7 @@ func _physics_process(delta):
 		direction = wander_direction
 		if direction != Vector2.ZERO:
 			rotation = direction.angle()
+	check_building_collision()
 	velocity = direction * move_speed
 	move_and_slide()
 	var map_size = Vector2(5120, 3840)
@@ -92,3 +101,28 @@ func take_damage(amount: int):
 		tween.tween_property(blood, "modulate:a", 0.0, 2.0)
 		tween.finished.connect(blood.queue_free)
 		queue_free()
+func check_building_collision():
+	var buildings = []
+	buildings.append_array(get_tree().get_nodes_in_group("wall"))
+	buildings.append_array(get_tree().get_nodes_in_group("door"))
+	buildings.append_array(get_tree().get_nodes_in_group("campfire"))
+	buildings.append_array(get_tree().get_nodes_in_group("spiketrap"))
+	buildings.append_array(get_tree().get_nodes_in_group("chest"))
+	buildings.append_array(get_tree().get_nodes_in_group("turret"))
+	for building in buildings:
+		if is_instance_valid(building):
+			var distance = global_position.distance_to(building.global_position)
+			if distance <= attack_range and can_attack_player:
+				if building.has_method("take_damage"):
+					building.take_damage(attack_damage)
+					can_attack_player = false
+					await get_tree().create_timer(attack_cooldown).timeout
+					can_attack_player = true
+					break
+func play_sound(sound: AudioStream):
+	var player = AudioStreamPlayer2D.new()
+	player.stream = sound
+	player.max_distance = 300.0
+	add_child(player)
+	player.play()
+	player.finished.connect(player.queue_free)

@@ -1,5 +1,5 @@
 extends StaticBody2D
-var health: float = 500.0
+var health: float = 700.0
 var is_open: bool = false
 func _ready():
 	add_to_group("door")
@@ -42,5 +42,8 @@ func close_door():
 	modulate = Color(1, 1, 1, 1)
 func take_damage(amount: float):
 	health -= amount
+	modulate = Color(1, 0.5, 0.5)
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color(1, 1, 1)
 	if health <= 0:
 		queue_free()

@@ -2,6 +2,7 @@ extends Node2D
 var heal_rate: float = 8.0
 var hunger_reduction: float = 0.6
 var heal_area: Area2D
+var health: float = 150.0
 func _ready():
 	add_to_group("campfire")
 	heal_area = Area2D.new()
@@ -33,3 +34,10 @@ func _physics_process(delta):
 	if player and not bodies.has(player):
 		if player.has_method("set_near_campfire"):
 			player.set_near_campfire(false)
+func take_damage(amount: int):
+	health -= amount
+	modulate = Color(1, 0.5, 0.5)
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color(1, 1, 1)
+	if health <= 0:
+		queue_free()

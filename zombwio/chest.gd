@@ -8,6 +8,7 @@ var storage: Dictionary = {
 var max_capacity: int = 100
 var interaction_area: Area2D
 var mode: String = "deposit"
+var health: float = 800.0
 func _ready():
 	add_to_group("chest")
 	var collision = CollisionShape2D.new()
@@ -51,3 +52,10 @@ func withdraw_all(player):
 		if storage[resource] > 0:
 			player.inventory[resource] += storage[resource]
 			storage[resource] = 0
+func take_damage(amount: int):
+	health -= amount
+	modulate = Color(1, 0.5, 0.5)
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color(1, 1, 1)
+	if health <= 0:
+		queue_free()

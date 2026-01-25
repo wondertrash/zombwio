@@ -10,6 +10,7 @@ var current_buildable: String = ""
 var ghost_preview: Node2D = null
 var can_place: bool = true
 var cost_label: Label = null
+var build_sound: AudioStream = load("res://sounds/build.wav")
 func _ready() -> void:
 	cost_label = Label.new()
 	cost_label.add_theme_font_size_override("font_size", 18)
@@ -126,6 +127,7 @@ func try_place_structure():
 	player.buildings_placed += 1
 	structure.global_position = ghost_preview.global_position
 	get_tree().current_scene.add_child(structure)
+	play_sound(build_sound)
 func get_build_cost(type: String) -> Dictionary:
 	match type:
 		"wall":
@@ -147,3 +149,9 @@ func can_afford(player, cost: Dictionary) -> bool:
 		if player.inventory.get(resource, 0) < cost[resource]:
 			return false
 	return true
+func play_sound(sound: AudioStream):
+	var player_node = AudioStreamPlayer.new()
+	player_node.stream = sound
+	add_child(player_node)
+	player_node.play()
+	player_node.finished.connect(player_node.queue_free)

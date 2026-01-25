@@ -2,6 +2,7 @@ extends StaticBody2D
 var damage: float = 20.0
 var damage_interval: float = 0.5
 var damage_area: Area2D
+var health: float = 1200.0
 func _ready():
 	add_to_group("spike_trap")
 	var sprite = Sprite2D.new()
@@ -38,3 +39,10 @@ func damage_zombie(zombie):
 		modulate = Color(1, 1, 1)
 	else:
 		zombie.set_meta("spike_cooldown", cooldown - get_process_delta_time())
+func take_damage(amount: int):
+	health -= amount
+	modulate = Color(1, 0.5, 0.5)
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color(1, 1, 1)
+	if health <= 0:
+		queue_free()
