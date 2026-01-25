@@ -41,6 +41,10 @@ var inventory: Dictionary = {
 	"copper": 0,
 	"fiber": 0
 }
+var hit_sound: AudioStream = load("res://sounds/hit.wav")
+var eat_sound: AudioStream = load("res://sounds/eat.wav")
+var swing_sound: AudioStream = load("res://sounds/swing.wav")
+var shoot_sound: AudioStream = load("res://sounds/shoot.wav")
 func _ready():
 	add_to_group("player")
 	current_health = max_health
@@ -153,6 +157,7 @@ func _perform_attack():
 func take_damage(amount: float):
 	if is_invincible:
 		return
+	play_sound(hit_sound)
 	current_health -= amount
 	time_since_last_damage = 0.0
 	modulate = Color(1, 0.3, 0.3)
@@ -174,11 +179,13 @@ func collect_resource(type: String, amount: int):
 	else:
 		inventory[type] += amount
 func eat_food(amount: float):
+	play_sound(eat_sound)
 	current_hunger += amount
 	current_hunger = clamp(current_hunger, 0, max_hunger)
 	current_health += berry_health
 	current_health = clamp(current_health, 0, max_health)
 func melee_attack():
+	play_sound(swing_sound)
 	var slash = Node2D.new()
 	var mouse_dir = global_position.direction_to(get_global_mouse_position())
 	slash.global_position = global_position
@@ -222,6 +229,7 @@ func melee_attack():
 	slash.queue_free()
 	hitbox.queue_free()
 func shoot_projectile():
+	play_sound(shoot_sound)
 	var projectile = projectile_scene.instantiate()
 	projectile.global_position = global_position
 	projectile.direction = global_position.direction_to(get_global_mouse_position())
@@ -245,3 +253,9 @@ func heal(amount: float):
 	current_health = clamp(current_health, 0, max_health)
 func set_near_campfire(value: bool):
 	near_campfire = value
+func play_sound(sound: AudioStream):
+	var player = AudioStreamPlayer.new()
+	player.stream = sound
+	add_child(player)
+	player.play()
+	player.finished.connect(player.queue_free)

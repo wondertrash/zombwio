@@ -35,6 +35,12 @@ func _ready() -> void:
 	player_dot.z_index = 10
 	add_child(player_dot)
 func _process(_delta):
+	var player = get_tree().get_first_node_in_group("player")
+	if not player or not is_instance_valid(player) or player.current_health <= 0:
+		visible = false
+		return
+	else:
+		visible = true
 	update_minimap()
 func update_minimap():
 	var player = get_tree().get_first_node_in_group("player")

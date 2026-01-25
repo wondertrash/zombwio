@@ -32,6 +32,12 @@ func _ready() -> void:
 	time_label.add_theme_font_size_override("font_size", 20)
 	add_child(time_label)
 func _process(delta: float) -> void:
+	var player = get_tree().get_first_node_in_group("player")
+	if not player or player.current_health <= 0:
+		visible = false
+		return
+	else:
+		visible = true
 	if player:
 		var health_percent = float(player.current_health) / float(player.max_health)
 		health_bar.size.x = 200 * health_percent
