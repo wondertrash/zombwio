@@ -27,6 +27,11 @@ func _ready() -> void:
 	fiber_label.modulate = Color(0.29, 0.41, 0.18)
 	add_child(fiber_label)
 func _process(delta):
+	if not player or not is_instance_valid(player) or player.current_health <= 0:
+		visible = false
+		return
+	else:
+		visible = true
 	if player:
 		wood_label.text = "Wood: %d" % player.inventory["wood"]
 		stone_label.text = "Stone: %d" % player.inventory["stone"]
