@@ -1,5 +1,7 @@
 extends Node2D
-@export var zombie_scene: PackedScene
+@export var zombie_scene = preload("res://zombie.tscn")
+@export var fast_zombie_scene = preload("res://fastzombie.tscn")
+@export var tank_zombie_scene = preload("res://tankzombie.tscn")
 @export var max_zombies: int = 64
 @export var spawn_distance: float = 256.0
 @export var map_size: Vector2 = Vector2(5120, 3840)
@@ -17,7 +19,14 @@ func spawn_zombie():
 	if not player:
 		return
 	var spawn_pos = get_valid_spawn_location(player.global_position)
-	var zombie = zombie_scene.instantiate()
+	var rand = randf()
+	var zombie
+	if rand < 0.7:
+		zombie = zombie_scene.instantiate()
+	elif rand < 0.9:
+		zombie = fast_zombie_scene.instantiate()
+	else:
+		zombie = tank_zombie_scene.instantiate()
 	zombie.global_position = spawn_pos
 	zombie.rotation = randf() * TAU
 	get_tree().current_scene.call_deferred("add_child", zombie)
