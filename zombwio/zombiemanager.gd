@@ -10,7 +10,7 @@ var zombies: Array = []
 func _ready() -> void:
 	for i in range(max_zombies):
 		spawn_zombie()
-func _process(delta):
+func _process(_delta):
 	var game_time = get_tree().current_scene.get_node("Player").survival_time if get_tree().get_first_node_in_group("player") else 0
 	var time_bonus = int(game_time / 180.0) * 8
 	max_zombies = 64 + time_bonus

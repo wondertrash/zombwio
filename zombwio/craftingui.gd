@@ -37,7 +37,7 @@ func _ready() -> void:
 		button.pressed.connect(_craft_item.bind(item_name))
 		panel.add_child(button)
 		y_pos += 40
-func _process(delta: float) -> void:
+func _process(_delta):
 	if Input.is_action_just_pressed("craft"):
 		toggle_menu()
 func toggle_menu():

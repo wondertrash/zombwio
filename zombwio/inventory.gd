@@ -26,7 +26,7 @@ func _ready() -> void:
 	fiber_label.add_theme_font_size_override("font_size", 18)
 	fiber_label.modulate = Color(0.29, 0.41, 0.18)
 	add_child(fiber_label)
-func _process(delta):
+func _process(_delta):
 	if not player or not is_instance_valid(player) or player.current_health <= 0:
 		visible = false
 		return

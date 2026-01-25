@@ -33,7 +33,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	global_position += direction * speed * delta
 func _on_hit(body):
-	if body == shooter:
+	if shooter and shooter.is_in_group("turret"):
+		if body.is_in_group("zombie"):
+			body.take_damage(damage)
+			queue_free()
 		return
 	if body.is_in_group("zombie"):
 		body.take_damage(damage)

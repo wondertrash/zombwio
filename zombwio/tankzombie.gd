@@ -29,7 +29,7 @@ func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	modulate = Color(0.5, 0.5, 1)
 	scale = Vector2(1.5, 1.5)
-func _process(delta):
+func _process(_delta):
 	var day_night = get_tree().current_scene.get_node_or_null("Daynightcycle")
 	if day_night and day_night.is_night():
 		move_speed = base_speed * 2.0

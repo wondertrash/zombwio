@@ -20,8 +20,6 @@ func _ready():
 	add_child(area)
 	area.body_entered.connect(_on_body_entered)
 	area.body_exited.connect(_on_body_exited)
-func _process(delta: float) -> void:
-	pass
 func _on_body_entered(body):
 	if body.is_in_group("player"):
 		call_deferred("open_door")

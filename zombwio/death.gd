@@ -3,8 +3,6 @@ var survival_time: float = 0.0
 func _ready() -> void:
 	visible = false
 	process_mode = Node.PROCESS_MODE_ALWAYS
-func _process(delta: float) -> void:
-	pass
 func show_death_screen(time: float):
 	var player = get_tree().get_first_node_in_group("player")
 	var zombie = get_tree().get_first_node_in_group("zombie")

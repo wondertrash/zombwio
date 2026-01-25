@@ -1,5 +1,6 @@
 extends CanvasLayer
 @export var game_scene: PackedScene
+var tutorial_scene = preload("res://tutorial.tscn")
 func _ready() -> void:
 	get_tree().paused = false
 	var viewport_size = get_viewport().get_visible_rect().size
@@ -18,12 +19,20 @@ func _ready() -> void:
 	play_btn.size = Vector2(140, 60)
 	play_btn.pressed.connect(_start_game)
 	add_child(play_btn)
+	var tutorial_btn = Button.new()
+	tutorial_btn.text = "How to Play"
+	tutorial_btn.position = Vector2(viewport_size.x * 0.5 - 70, viewport_size.y * 0.62)
+	tutorial_btn.size = Vector2(140, 60)
+	tutorial_btn.pressed.connect(_show_tutorial)
+	add_child(tutorial_btn)
 	var controls = Label.new()
-	controls.text = "WASD - Move | Mouse - Aim | Left-Click - Attack | C - Craft | B - Build"
-	controls.position = Vector2(viewport_size.x * 0.5 - 270, viewport_size.y * 0.8)
+	controls.text = "A primitive zombie survival game"
+	controls.position = Vector2(viewport_size.x * 0.5 - 130, viewport_size.y * 0.8)
 	controls.add_theme_font_size_override("font_size", 16)
 	add_child(controls)
-func _process(delta: float) -> void:
-	pass
+func _show_tutorial():
+	var tutorial = tutorial_scene.instantiate()
+	tutorial.tutorial_closed.connect(_start_game)
+	add_child(tutorial)
 func _start_game():
 	get_tree().change_scene_to_file("res://main.tscn")

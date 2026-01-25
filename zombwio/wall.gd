@@ -10,8 +10,6 @@ func _ready():
 	var sprite = Sprite2D.new()
 	sprite.texture = load("res://images/wall.png")
 	add_child(sprite)
-func _process(delta: float) -> void:
-	pass
 func take_damage(amount: int):
 	health -= amount
 	modulate = Color(1, 0.5, 0.5)

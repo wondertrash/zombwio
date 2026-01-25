@@ -28,7 +28,7 @@ func _ready():
 	add_child(zombie_attack_sprite)
 	player = get_tree().get_first_node_in_group("player")
 	modulate = Color(1, 0, 0)
-func _process(delta):
+func _process(_delta):
 	var day_night = get_tree().current_scene.get_node_or_null("Daynightcycle")
 	if day_night and day_night.is_night():
 		move_speed = base_speed * 2.0

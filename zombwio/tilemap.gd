@@ -6,5 +6,3 @@ func _ready() -> void:
 		for y in range(map_size.y):
 			var random_tile = randi() % 2
 			set_cell(0, Vector2i(x, y), 0, Vector2i(random_tile, 0))
-func _process(delta: float) -> void:
-	pass
