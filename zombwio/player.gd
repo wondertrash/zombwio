@@ -27,6 +27,7 @@ var mace_sprite: Sprite2D
 var bow_sprite: Sprite2D
 var crossbow_sprite: Sprite2D
 var gun_sprite: Sprite2D
+var zombies_killed: int = 0
 var campfire_hunger_multiplier: float = 0.2
 var cardinal_direction: Vector2 = Vector2.DOWN
 var resources_collected: int = 0
@@ -77,6 +78,7 @@ func _ready():
 		randf_range(16, map_size.x - 16),
 		randf_range(16, map_size.y - 16)
 	)
+	var player = get_tree().get_first_node_in_group("player")
 	var camera = Camera2D.new()
 	camera.enabled = true
 	camera.position_smoothing_enabled = true

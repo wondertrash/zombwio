@@ -37,10 +37,13 @@ func is_night() -> bool:
 	var current_hour = time_of_day * 24.0
 	return current_hour >= night_start_hour or current_hour < day_start_hour
 func update_zombie_stats():
+	var player = get_tree().get_first_node_in_group("player")
+	var game_time = player.survival_time if player else 0
 	var zombie_manager = get_tree().current_scene.get_node_or_null("zombiemanager")
 	if zombie_manager:
 		if is_night():
-			zombie_manager.max_zombies = 128
+			var time_multiplier = 1.0 + (game_time / 180.0)
+			zombie_manager.max_zombies = int(80 * time_multiplier)
 		else:
 			zombie_manager.max_zombies = 64
 	var zombies = get_tree().get_nodes_in_group("zombie")

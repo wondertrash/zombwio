@@ -29,7 +29,7 @@ func show_death_screen(time: float):
 	add_child(time_text)
 	var stats_text = Label.new()
 	stats_text.text = "Zombies Killed: %d\nResources Collected: %d\nBuildings Placed: %d" % [
-		zombie.zombies_killed if player else 0,
+		player.zombies_killed if player else 0,
 		player.resources_collected if player else 0,
 		player.buildings_placed if player else 0
 	]

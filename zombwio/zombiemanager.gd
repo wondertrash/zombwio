@@ -11,6 +11,10 @@ func _ready() -> void:
 	for i in range(max_zombies):
 		spawn_zombie()
 func _process(delta):
+	var game_time = get_tree().current_scene.get_node("Player").survival_time if get_tree().get_first_node_in_group("player") else 0
+	var time_bonus = int(game_time / 180.0) * 8
+	max_zombies = 64 + time_bonus
+	max_zombies = min(max_zombies, 255)
 	zombies = zombies.filter(func(z): return is_instance_valid(z))
 	while zombies.size() < max_zombies:
 		spawn_zombie()
@@ -19,11 +23,14 @@ func spawn_zombie():
 	if not player:
 		return
 	var spawn_pos = get_valid_spawn_location(player.global_position)
+	var game_time = player.survival_time
+	var special_chance = 0.3 + (game_time / 180.0) * 0.2
+	special_chance = min(special_chance, 0.7)
 	var rand = randf()
 	var zombie
-	if rand < 0.7:
+	if rand < (1.0 - special_chance):
 		zombie = zombie_scene.instantiate()
-	elif rand < 0.9:
+	elif rand < (1.0 - special_chance * 0.5):
 		zombie = fast_zombie_scene.instantiate()
 	else:
 		zombie = tank_zombie_scene.instantiate()

@@ -10,8 +10,8 @@ var recipes = {
 	"Gun": {"wood": 5, "stone": 0, "copper": 10, "fiber": 0, "damage": 80, "range": 300, "type": "gun"},
 	"Bandage": {"wood": 0, "stone": 0, "copper": 0, "fiber": 3, "damage": 0, "range": 0, "type": "heal"},
 	"Health Potion": {"wood": 0, "stone": 0, "copper": 1, "fiber": 0, "damage": 0, "range": 0, "type": "heal"},
-	"Leather Armour": {"wood": 0, "stone": 0, "copper": 10, "fiber": 20, "damage": 0, "range": 0, "type": "armour"},
-	"Copper Armour": {"wood": 0, "stone": 0, "copper": 15, "fiber": 5, "damage": 0, "range": 0, "type": "armour"}
+	"Leather Armour": {"wood": 0, "stone": 0, "copper": 5, "fiber": 20, "damage": 0, "range": 0, "type": "armour"},
+	"Copper Armour": {"wood": 0, "stone": 0, "copper": 10, "fiber": 5, "damage": 0, "range": 0, "type": "armour"}
 }
 var craft_sound: AudioStream = load("res://sounds/craft.wav")
 func _ready() -> void:

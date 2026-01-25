@@ -131,17 +131,17 @@ func try_place_structure():
 func get_build_cost(type: String) -> Dictionary:
 	match type:
 		"wall":
-			return {"wood": 5, "stone": 2}
+			return {"wood": 2}
 		"door":
-			return {"wood": 8, "fiber": 3}
+			return {"wood": 5, "fiber": 5}
 		"campfire":
 			return {"wood": 10, "stone": 5}
 		"spiketrap":
-			return {"wood": 8, "stone": 5}
+			return {"wood": 5, "stone": 5}
 		"chest":
 			return {"wood": 15, "fiber": 5}
 		"turret":
-			return {"wood": 20, "stone": 10, "copper": 15}
+			return {"wood": 20, "stone": 20, "copper": 5}
 		_:
 			return {}
 func can_afford(player, cost: Dictionary) -> bool:

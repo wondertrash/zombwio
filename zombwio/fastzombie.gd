@@ -78,6 +78,9 @@ func take_damage(amount: int):
 	await get_tree().create_timer(0.1).timeout
 	modulate = Color(1, 0.3, 0.3)
 	if health <= 0:
+		var player = get_tree().get_first_node_in_group("player")
+		if player:
+			player.zombies_killed += 1
 		zombies_killed += 1
 		var blood = Node2D.new()
 		blood.global_position = global_position
