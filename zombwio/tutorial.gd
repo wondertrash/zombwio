@@ -19,7 +19,7 @@ CONTROLS:
 - WASD - Move
 - Mouse - Aim
 - Left Click - Attack
-- ESC - Crafting Menu
+- C - Crafting Menu
 - B - Build Mode
   (Press 1-6 for structure)
 
@@ -37,12 +37,13 @@ ZOMBIE TYPES:
 - Eat berries to restore
   hunger and health
 - Craft better weapons
-  (ESC menu)
+  (C)
 - Build walls and turrets
   to defend yourself
+  (B)
 - Stay near campfires
   to heal
-- Beware - zombies are
+- Beware: zombies are
 more active at night!"""
 	right_text.position = Vector2(viewport_size.x * 0.55, viewport_size.y * 0.25)
 	right_text.add_theme_font_size_override("font_size", 14)

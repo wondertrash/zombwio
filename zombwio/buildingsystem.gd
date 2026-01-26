@@ -21,17 +21,17 @@ func _process(_delta):
 		toggle_build_mode()
 	if build_mode:
 		if Input.is_key_pressed(KEY_1):
-			set_buildable("wall")
+			set_buildable("Wall")
 		elif Input.is_key_pressed(KEY_2):
-			set_buildable("door")
+			set_buildable("Door")
 		elif Input.is_key_pressed(KEY_3):
-			set_buildable("campfire")
+			set_buildable("Campfire")
 		elif Input.is_key_pressed(KEY_4):
-			set_buildable("spiketrap")
+			set_buildable("Spike Trap")
 		elif Input.is_key_pressed(KEY_5):
-			set_buildable("chest")
+			set_buildable("Chest")
 		elif Input.is_key_pressed(KEY_6):
-			set_buildable("turret")
+			set_buildable("Turret")
 	if build_mode and ghost_preview:
 		var camera = get_viewport().get_camera_2d()
 		if camera:
@@ -58,7 +58,7 @@ func _process(_delta):
 func toggle_build_mode():
 	build_mode = !build_mode
 	if build_mode:
-		set_buildable("wall")
+		set_buildable("Wall")
 	else:
 		if ghost_preview:
 			ghost_preview.queue_free()
@@ -67,17 +67,17 @@ func set_buildable(type: String):
 	current_buildable = type
 	if ghost_preview:
 		ghost_preview.queue_free()
-	if type == "wall":
+	if type == "Wall":
 		ghost_preview = wall_scene.instantiate()
-	elif type == "door":
+	elif type == "Door":
 		ghost_preview = door_scene.instantiate()
-	elif type == "campfire":
+	elif type == "Campfire":
 		ghost_preview = campfire_scene.instantiate()
-	elif type == "spiketrap":
+	elif type == "Spike Trap":
 		ghost_preview = spike_trap_scene.instantiate()
-	elif type == "chest":
+	elif type == "Chest":
 		ghost_preview = chest_scene.instantiate()
-	elif type == "turret":
+	elif type == "Turret":
 		ghost_preview = turret_scene.instantiate()
 	ghost_preview.modulate = Color(1, 1, 1, 0.5)
 	if ghost_preview is StaticBody2D or ghost_preview is CharacterBody2D:
@@ -112,17 +112,17 @@ func try_place_structure():
 	for resource in cost:
 		player.inventory[resource] -= cost[resource]
 	var structure = null
-	if current_buildable == "wall":
+	if current_buildable == "Wall":
 		structure = wall_scene.instantiate()
-	elif current_buildable == "door":
+	elif current_buildable == "Door":
 		structure = door_scene.instantiate()
-	elif current_buildable == "campfire":
+	elif current_buildable == "Campfire":
 		structure = campfire_scene.instantiate()
-	elif current_buildable == "spiketrap":
+	elif current_buildable == "Spike Trap":
 		structure = spike_trap_scene.instantiate()
-	elif current_buildable == "chest":
+	elif current_buildable == "Chest":
 		structure = chest_scene.instantiate()
-	elif current_buildable == "turret":
+	elif current_buildable == "Turret":
 		structure = turret_scene.instantiate()
 	player.buildings_placed += 1
 	structure.global_position = ghost_preview.global_position
@@ -130,17 +130,17 @@ func try_place_structure():
 	play_sound(build_sound)
 func get_build_cost(type: String) -> Dictionary:
 	match type:
-		"wall":
+		"Wall":
 			return {"wood": 2}
-		"door":
+		"Door":
 			return {"wood": 5, "fiber": 5}
-		"campfire":
+		"Campfire":
 			return {"wood": 10, "stone": 5}
-		"spiketrap":
+		"Spike Trap":
 			return {"wood": 5, "stone": 5}
-		"chest":
+		"Chest":
 			return {"wood": 15, "fiber": 5}
-		"turret":
+		"Turret":
 			return {"wood": 20, "stone": 20, "copper": 5}
 		_:
 			return {}
