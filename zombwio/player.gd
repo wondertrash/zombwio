@@ -33,6 +33,9 @@ var cardinal_direction: Vector2 = Vector2.DOWN
 var resources_collected: int = 0
 var buildings_placed: int = 0
 var speed_multiplier: float = 1.0
+var max_inventory_per_item: int = 32
+var last_damage_sound_time: float = 0.0
+var damage_sound_cooldown: float = 0.25
 var default_speed: float = 100.0
 var is_dead := false
 var inventory: Dictionary = {
@@ -42,7 +45,6 @@ var inventory: Dictionary = {
 	"copper": 0,
 	"fiber": 0
 }
-var max_inventory_per_item: int = 32
 var hit_sound: AudioStream = load("res://sounds/hit.wav")
 var eat_sound: AudioStream = load("res://sounds/eat.wav")
 var swing_sound: AudioStream = load("res://sounds/swing.wav")
@@ -161,7 +163,10 @@ func _perform_attack():
 func take_damage(amount: float):
 	if is_invincible:
 		return
-	play_sound(hit_sound)
+	var current_time = Time.get_ticks_msec() / 1000.0
+	if current_time - last_damage_sound_time >= damage_sound_cooldown:
+		play_sound(hit_sound)
+		last_damage_sound_time = current_time
 	current_health -= amount
 	time_since_last_damage = 0.0
 	modulate = Color(1, 0.3, 0.3)
@@ -177,6 +182,9 @@ func die():
 	if death_screen:
 		death_screen.show_death_screen(survival_time)
 func collect_resource(type: String, amount: int):
+	if inventory[type] >= max_inventory_per_item:
+		show_inventory_full_message(type)
+		return
 	var space_available = max_inventory_per_item - inventory[type]
 	var amount_to_add = min(amount, space_available)
 	if type == "berries":
@@ -260,6 +268,22 @@ func heal(amount: float):
 	current_health = clamp(current_health, 0, max_health)
 func set_near_campfire(value: bool):
 	near_campfire = value
+func show_inventory_full_message(resource_type: String):
+	var label = Label.new()
+	label.text = "%s FULL!" % resource_type.to_upper()
+	label.add_theme_font_size_override("font_size", 20)
+	label.modulate = Color(1, 0.5, 0)
+	label.z_index = 8
+	label.global_position = global_position - Vector2(30, 50)
+	get_parent().add_child(label)
+	var tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(label, "global_position:y", label.global_position.y - 30, 1.0)
+	tween.tween_property(label, "modulate:a", 0.0, 1.0)
+	tween.finished.connect(label.queue_free)
+	modulate = Color(1, 0.5, 0)
+	await get_tree().create_timer(0.1).timeout
+	modulate = Color(1, 1, 1)
 func play_sound(sound: AudioStream):
 	var player = AudioStreamPlayer.new()
 	player.stream = sound
