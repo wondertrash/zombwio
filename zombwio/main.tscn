@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://coju2hp6gsoeu"]
+[gd_scene load_steps=14 format=3 uid="uid://coju2hp6gsoeu"]
 
 [ext_resource type="PackedScene" uid="uid://deufn2gdbfua0" path="res://player.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://dnorke7acoblq" path="res://zombiemanager.tscn" id="2_5vw27"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dcm7x7iexitvn" path="res://tilemap.tscn" id="9_kek77"]
 [ext_resource type="PackedScene" uid="uid://u1b8j4l14ofm" path="res://daynightcycle.tscn" id="10_efxa6"]
 [ext_resource type="PackedScene" uid="uid://b4cioh86xyta3" path="res://minimap.tscn" id="12_dg77c"]
+[ext_resource type="PackedScene" uid="uid://6gktd2oaihl3" path="res://soundtrack.tscn" id="13_ycdy4"]
 
 [node name="Game" type="Node2D"]
 
@@ -34,6 +35,8 @@ resource_scene = ExtResource("5_lquwl")
 
 [node name="Daynightcycle" parent="." instance=ExtResource("10_efxa6")]
 
+[node name="Minimap" parent="." instance=ExtResource("12_dg77c")]
+
 [node name="Tilemap" parent="." instance=ExtResource("9_kek77")]
 
-[node name="Minimap" parent="." instance=ExtResource("12_dg77c")]
+[node name="Soundtrack" parent="." instance=ExtResource("13_ycdy4")]

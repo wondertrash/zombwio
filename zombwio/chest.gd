@@ -97,8 +97,10 @@ func _deposit(player, resource: String):
 		_update_label(resource)
 func _withdraw(player, resource: String):
 	if storage[resource] > 0:
-		player.inventory[resource] += storage[resource]
-		storage[resource] = 0
+		var space_available = player.max_inventory_per_item - player.inventory[resource]
+		var amount_to_withdraw = min(storage[resource], space_available)
+		player.inventory[resource] += amount_to_withdraw
+		storage[resource] -= amount_to_withdraw
 		_update_label(resource)
 func _update_label(resource: String):
 	if resource_labels.has(resource):

@@ -3,11 +3,11 @@ extends Node2D
 @export var spawn_area_size: Vector2 = Vector2(5120, 3840)
 @export var spawn_map_buffer: float = 16.0
 @export var spawn_player_buffer: float = 16.0
-@export var max_wood: int = 48
-@export var max_stone: int = 24
-@export var max_berries: int = 32
-@export var max_copper: int = 8
-@export var max_fiber: int = 24
+@export var max_wood: int = 80
+@export var max_stone: int = 48
+@export var max_berries: int = 40
+@export var max_copper: int = 16
+@export var max_fiber: int = 48
 var wood_resources: Array = []
 var stone_resources: Array = []
 var berry_resources: Array = []

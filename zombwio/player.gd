@@ -50,6 +50,9 @@ var eat_sound: AudioStream = load("res://sounds/eat.wav")
 var swing_sound: AudioStream = load("res://sounds/swing.wav")
 var shoot_sound: AudioStream = load("res://sounds/shoot.wav")
 var resource_sound: AudioStream = load("res://sounds/resource.wav")
+var footstep_sound: AudioStream = load("res://sounds/footstep.wav")
+var footstep_timer: float = 0.0
+var footstep_interval: float = 0.365
 func _ready():
 	add_to_group("player")
 	current_health = max_health
@@ -119,6 +122,13 @@ func _process(delta):
 		current_health += regen_rate * delta
 		current_health = clamp(current_health, 0, max_health)
 	survival_time += delta
+	if direction != Vector2.ZERO:
+		footstep_timer -= delta
+		if footstep_timer <= 0:
+			play_footstep()
+			footstep_timer = footstep_interval
+	else:
+		footstep_timer = 0
 func _physics_process(_delta):
 	velocity = direction * default_speed * speed_multiplier
 	move_and_slide()
@@ -290,3 +300,11 @@ func play_sound(sound: AudioStream):
 	add_child(player)
 	player.play()
 	player.finished.connect(player.queue_free)
+func play_footstep():
+	var player_node = AudioStreamPlayer2D.new()
+	player_node.stream = footstep_sound
+	player_node.volume_db = 8
+	player_node.pitch_scale = randf_range(0.8, 1.2)
+	add_child(player_node)
+	player_node.play()
+	player_node.finished.connect(player_node.queue_free)

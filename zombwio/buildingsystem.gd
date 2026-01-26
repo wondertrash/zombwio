@@ -103,7 +103,7 @@ func try_place_structure():
 	var cost = get_build_cost(current_buildable)
 	if not can_afford(player, cost):
 		return
-	if ghost_preview.global_position.distance_to(player.global_position) > 100:
+	if ghost_preview.global_position.distance_to(player.global_position) > 92:
 		return
 	var map_size = Vector2(5120, 3840)
 	var pos = ghost_preview.global_position
