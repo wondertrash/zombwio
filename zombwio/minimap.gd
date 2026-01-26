@@ -55,6 +55,9 @@ func update_minimap():
 	structures.append_array(get_tree().get_nodes_in_group("wall"))
 	structures.append_array(get_tree().get_nodes_in_group("door"))
 	structures.append_array(get_tree().get_nodes_in_group("campfire"))
+	structures.append_array(get_tree().get_nodes_in_group("spiketrap"))
+	structures.append_array(get_tree().get_nodes_in_group("chest"))
+	structures.append_array(get_tree().get_nodes_in_group("turret"))
 	for structure in structures:
 		if is_instance_valid(structure):
 			var pos = world_to_minimap(structure.global_position)
@@ -66,8 +69,14 @@ func update_minimap():
 					dot.color = Color(0.6, 0.4, 0.2)
 				elif structure.is_in_group("door"):
 					dot.color = Color(0.8, 0.6, 0.3)
-				elif structure.is_in_group("campfre"):
+				elif structure.is_in_group("campfire"):
 					dot.color = Color(1, 0.5, 0)
+				elif structure.is_in_group("spiketrap"):
+					dot.color = Color(0.4, 0.4, 0.4)
+				elif structure.is_in_group("chest"):
+					dot.color = Color(0.6, 0.6, 0.3)
+				elif structure.is_in_group("turret"):
+					dot.color = Color(1, 0.8, 0)
 				structure_container.add_child(dot)
 	for child in zombie_container.get_children():
 		zombie_container.remove_child(child)

@@ -42,6 +42,7 @@ var inventory: Dictionary = {
 	"copper": 0,
 	"fiber": 0
 }
+var max_inventory_per_item: int = 32
 var hit_sound: AudioStream = load("res://sounds/hit.wav")
 var eat_sound: AudioStream = load("res://sounds/eat.wav")
 var swing_sound: AudioStream = load("res://sounds/swing.wav")
@@ -176,12 +177,14 @@ func die():
 	if death_screen:
 		death_screen.show_death_screen(survival_time)
 func collect_resource(type: String, amount: int):
-	play_sound(resource_sound)
-	resources_collected += amount
+	var space_available = max_inventory_per_item - inventory[type]
+	var amount_to_add = min(amount, space_available)
 	if type == "berries":
 		eat_food(40)
 	else:
-		inventory[type] += amount
+		inventory[type] += amount_to_add
+		resources_collected += amount_to_add
+		play_sound(resource_sound)
 func eat_food(amount: float):
 	play_sound(eat_sound)
 	current_hunger += amount
