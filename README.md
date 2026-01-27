@@ -8,7 +8,8 @@ Survive in a post-apocalyptic world with limited resources. Start with basic wea
 WASD - Move, 
 Mouse - Aim, 
 Left Click - Attack, 
-C - Crafting menu
+C - Crafting menu,
+B - Building menu
 
 # Development
 Engine: Godot 4.5.1, 
