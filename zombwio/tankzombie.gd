@@ -51,13 +51,14 @@ func _physics_process(delta):
 		rotation = angle
 		if distance_to_player < attack_range and can_attack_player:
 			if player.has_method("take_damage"):
-				zombie_idle_sprite.visible = false
-				zombie_attack_sprite.visible = true
 				player.take_damage(attack_damage)
 				can_attack_player = false
-				await get_tree().create_timer(attack_cooldown).timeout
+				zombie_idle_sprite.visible = false
+				zombie_attack_sprite.visible = true
+				await get_tree().create_timer(0.15).timeout
 				zombie_idle_sprite.visible = true
 				zombie_attack_sprite.visible = false
+				await get_tree().create_timer(attack_cooldown).timeout
 				can_attack_player = true
 	else:
 		wander_timer -= delta

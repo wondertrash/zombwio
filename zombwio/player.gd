@@ -156,12 +156,7 @@ func _perform_attack():
 	elif current_weapon == "fist":
 		attack_sprite.visible = true
 		melee_attack()
-	var cooldown = 0.5
-	if current_weapon == "bow" or current_weapon == "crossbow":
-		cooldown = 1.0
-	elif current_weapon == "gun":
-		cooldown = 1.6
-	await get_tree().create_timer(cooldown).timeout
+	await get_tree().create_timer(0.35).timeout
 	is_attacking = false
 	attack_sprite.visible = false
 	mace_sprite.visible = false
@@ -169,6 +164,12 @@ func _perform_attack():
 	crossbow_sprite.visible = false
 	gun_sprite.visible = false
 	idle_sprite.visible = true
+	var cooldown = 0.5
+	if current_weapon == "bow" or current_weapon == "crossbow":
+		cooldown = 1.0
+	elif current_weapon == "gun":
+		cooldown = 1.5
+	await get_tree().create_timer(cooldown).timeout
 	can_attack = true
 func take_damage(amount: float):
 	if is_invincible:

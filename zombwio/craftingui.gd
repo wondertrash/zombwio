@@ -18,7 +18,7 @@ func _ready() -> void:
 	var viewport_size = get_viewport().get_visible_rect().size
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	panel = Panel.new()
-	panel.position = Vector2(viewport_size.x - 560, viewport_size.y - 480)
+	panel.position = Vector2(viewport_size.x * 0.5 - 175, viewport_size.y * 0.5 - 200)
 	panel.size = Vector2(350, 400)
 	panel.visible = false
 	panel.process_mode = Node.PROCESS_MODE_ALWAYS
