@@ -49,6 +49,23 @@ func _craft_item(item_name: String):
 	if not player:
 		return
 	var recipe = recipes[item_name]
+	if recipe["type"] == "melee" or recipe["type"] == "bow" or recipe["type"] == "gun":
+		var weapon_name = ""
+		if item_name == "Mace":
+			weapon_name = "mace"
+		elif item_name == "Bow":
+			weapon_name = "bow"
+		elif item_name == "Crossbow":
+			weapon_name = "crossbow"
+		elif item_name == "Gun":
+			weapon_name = "gun"
+		else:
+			weapon_name = "fist"
+		if player.current_weapon == weapon_name:
+			panel.modulate = Color(1, 1, 0.5)
+			await get_tree().create_timer(0.2).timeout
+			panel.modulate = Color(1, 1, 1)
+			return
 	var can_craft = true
 	if player.inventory["wood"] < recipe["wood"]: can_craft = false
 	if player.inventory["stone"] < recipe["stone"]: can_craft = false
